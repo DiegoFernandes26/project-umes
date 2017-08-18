@@ -89,7 +89,8 @@
     </div>
 </div>
 
-<script type="text/javascript" src="{{asset('js/materialize.min.js')}}"></script>
+{{--<script type="text/javascript" src="{{asset('js/materialize.min.js')}}"></script>--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
 <script type="text/javascript" src="{{asset('js/jquery.mask.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/funcoes.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/cropper.js')}}"></script>
