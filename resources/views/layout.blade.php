@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="{{{ asset('img/favicon.png') }}}">
 
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="{{asset('css/materialize.min.css')}}">
 
     <!-- Compiled and minified JavaScript -->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -89,7 +89,7 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+<script type="text/javascript" src="{{asset('js/materialize.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.mask.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/funcoes.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/cropper.js')}}"></script>
