@@ -19,7 +19,7 @@ class Escola extends Model
     ];
     public $rules = [
         'nome' => 'required',
-        'cnpj' => 'required|cnpj|unique:Escolas'
+        'cnpj' => 'required|cnpj|unique:escolas'
     ];
 
     public function aluno()
