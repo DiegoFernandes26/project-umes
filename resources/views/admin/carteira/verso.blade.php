@@ -70,7 +70,7 @@
                                     {{$versos->name}}</h5>
 
                                 <a href="{{route('cart.verso.excluir', ['id'=>$versos->id])}}"
-                                class="btn __cem btn-flat">Excluir</a>   </li>
+                                   class="btn __cem btn-flat">Excluir</a>   </li>
                             </div>
                         </div>
                     </div>
