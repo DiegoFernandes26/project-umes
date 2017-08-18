@@ -89,10 +89,10 @@
     </div>
 </div>
 
+<script type="text/javascript" src="{{asset('js/materialize.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.mask.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/cropper.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.maskMoney.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/materialize.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/funcoes.js')}}"></script>
 @yield('scripts')
 </body>
