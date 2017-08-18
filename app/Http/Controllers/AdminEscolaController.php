@@ -48,7 +48,7 @@ class AdminEscolaController extends Controller
         $this->validate($request, $this->Escola->rules);
 
         $escola = $this->Escola->create($this->Escola->newescola($request));
-        if($escola):           
+        if($escola):
             $instituicao = $escola;
             return view('admin.endereco.create', compact('instituicao'));
         endif;
