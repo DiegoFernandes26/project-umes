@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="{{{ asset('img/favicon.png') }}}">
 
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="{{asset('css/materialize.min.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 
     <!-- Compiled and minified JavaScript -->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -89,11 +89,11 @@
     </div>
 </div>
 
-<script type="text/javascript" src="{{asset('js/materialize.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="{{asset('js/jquery.mask.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/funcoes.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/cropper.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.maskMoney.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/funcoes.js')}}"></script>
 @yield('scripts')
 </body>
 </html>
