@@ -13,15 +13,15 @@
         @endif
     	{!! Form::open(['route'=>'ganhos.por.inst','method'=>'get'])!!}
 
-    	<div class="row">
+    	<div class="row margin__vinte">
     	 <div class="col s6">
             {!! Form::label('dt_inicio','Data de inicío:') !!}
-            {!! Form::date('dt_inicio', null, ['placeholder'=>'Data de inicio', 'class'=>'datepicker']) !!}
+            {!! Form::date('dt_inicio', null, ['placeholder'=>'Data de início', 'class'=>'datepicker']) !!}
         </div>
 
         <div class="col s6">
             {!! Form::label('dt_fim','Data de fim:') !!}
-            {!! Form::date('dt_fim', null, ['placeholder'=>'Data de fim']) !!}
+            {!! Form::date('dt_fim', null, ['placeholder'=>'Data de fim', 'class'=>'datepicker']) !!}
         </div>
 
         </div>
