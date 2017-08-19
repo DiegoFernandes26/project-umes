@@ -356,8 +356,17 @@ function deletar_modal(id, name) {
     $("#item").html(name);
     var bt_excluir = "<a href='destroy/" + id + "' class='btn modal-action waves-effect red darken-1'>Confirmar</a>";
     $("#confirmar-footer").html(bt_excluir);
-
 }
+
+function deletar_modal_escola(id, name) {
+    $('#excluir').modal('open');
+    $("#item").html(name);
+    var bt_excluir = "<a href='escola/destroy/" + id + "' class='btn modal-action waves-effect red darken-1'>Confirmar</a>";
+    $("#confirmar-footer").html(bt_excluir);
+}
+
+
+
 
 
 function editar_modal(id) {

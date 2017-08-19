@@ -40,10 +40,10 @@
                         </div>
                         <div>
                             @if($relation->checkRelEscola($escola->id)==null)
-                            <a href="{{route('admin.escola.destroy', ['id'=>$escola->id])}}"
-                               class="waves-effect waves-light btn-flat red-text text-darken-1">Excluir</a>
+                            <a href="#"
+                               onclick="deletar_modal_escola({{$escola->id}},'{{$escola->nome}}')" class="waves-effect waves-light btn-flat red-text text-darken-1">Excluir</a>
                                @else
-                            <a href="{{route('admin.escola.destroy', ['id'=>$escola->id])}}" class="waves-effect waves-light btn-flat disabled">Excluir</a>
+                            <a href="#" class="waves-effect waves-light btn-flat disabled">Excluir</a>
                                @endif
                         </div>
                     </div>
