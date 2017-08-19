@@ -332,15 +332,13 @@ h1.dado-relatorio-cont {
 }
 .foto-perfil-vizualizar {
     width: 100px;
-    height: 100px;
     overflow: hidden;
-    border-radius: 50%;
+    border-radius: 3px;
     border: 1px solid #333;
     box-shadow: 2px 2px #333;
 }
 .foto-perfil-vizualizar img {
     width: 100%;
-    min-height: 100%;
 }
 fieldset{
     border-style: dashed;
