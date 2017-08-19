@@ -331,14 +331,16 @@ h1.dado-relatorio-cont {
     text-align: center;
 }
 .foto-perfil-vizualizar {
-    width: 60%;
+    width: 100px;
+    height: 100px;
     overflow: hidden;
-    border-radius: 2px;
+    border-radius: 50%;
     border: 1px solid #333;
     box-shadow: 2px 2px #333;
 }
 .foto-perfil-vizualizar img {
     width: 100%;
+    min-height: 100%;
 }
 fieldset{
     border-style: dashed;
