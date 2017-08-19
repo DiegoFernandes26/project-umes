@@ -331,9 +331,9 @@ h1.dado-relatorio-cont {
     text-align: center;
 }
 .foto-perfil-vizualizar {
-    width: 100px;
+    width: 60%;
     overflow: hidden;
-    border-radius: 3px;
+    border-radius: 2px;
     border: 1px solid #333;
     box-shadow: 2px 2px #333;
 }
