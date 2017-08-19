@@ -2,17 +2,17 @@
 @section('content')
     <nav>
         <div class="nav-wrapper cyan">
-            <a href="#!" class="brand-logo">Logo</a>
+            <a href="#!" class="brand-logo">Aluno</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="sass.html">Sass</a></li>
-                <li><a href="badges.html">Components</a></li>
-                <li><a href="collapsible.html">Javascript</a></li>
-                <li><a href="mobile.html">Mobile</a></li>
+                {{--   <li><a href="sass.html">Sass</a></li>
+                   <li><a href="badges.html">Components</a></li>
+                   <li><a href="collapsible.html">Javascript</a></li>
+                   <li><a href="mobile.html">Mobile</a></li>--}}
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="sass.html">Sass</a></li>
-                <li><a href="badges.html">Components</a></li>
+                {{-- <li><a href="sass.html">Sass</a></li>
+                 <li><a href="badges.html">Components</a></li>--}}
             </ul>
         </div>
     </nav>
@@ -73,13 +73,18 @@
 
 
                 <div class="collapsible-body">
+
+                    @if ($busca->rg_frente):
                     <fieldset>
                         <legend>RG</legend>
                         <img src="../../{{$busca->rg_frente}}" class="materialboxed">
                     </fieldset>
+                    @endif
                 </div>
 
             </li>
+
+
         </ul>
     </div>
 
