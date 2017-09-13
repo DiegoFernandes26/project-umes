@@ -9,7 +9,7 @@
         {!! Form::model($EscId,['route'=>['admin.escola.update', $EscId->id],'method'=>'put']) !!}
 
         @include('admin.escola._form')
-        <div>
+        <div>            
             <div class="row">
                 <div class="col s12">
 
@@ -21,8 +21,17 @@
                             <ul>
                                 <li>
                                     <div class="col s3" id="cursos">
+                                        @if($relation->checkRelCursosAluno($EscId->id, $cur->id)!=null)
+                                            <div style="display: none">
+                                           {!! Form::checkbox('curso_id[]',$cur->id,(in_array($cur->id, $cId)?true:false), ['id'=>$cur->name])!!}
+
+                                             {!! Form::label($cur->name, $cur->name) !!}
+                                            </div>
+                                        @endif
+                                       
+
                                         {{--($relation->checkRelCursosAluno($EscId->id, $cur->id)!=null? 'disabled' : '')--}}
-                                        {!! Form::checkbox('curso_id[]',$cur->id, (in_array($cur->id, $cId)?true:false)||($relation->checkRelCursosAluno($EscId->id, $cur->id)!=null? true : ''), ['id'=>$cur->name])!!}
+                                       {!! Form::checkbox('curso_id[]',$cur->id, (in_array($cur->id, $cId)?true:false)||($relation->checkRelCursosAluno($EscId->id, $cur->id)!=null? true :''), ['id'=>$cur->name,($relation->checkRelCursosAluno($EscId->id, $cur->id)!=null? 'disabled' : '')])!!}
 
                                         {!! Form::label($cur->name, $cur->name) !!}
 
@@ -31,7 +40,7 @@
                             </ul>
 
                         @endforeach
-                    @else
+                        @else
                         <h4 class="grey-text">Selecione um nível de ensino para a instituição para poder vincular a um curso.</h4>
                     @endif
                 </div>
@@ -40,17 +49,17 @@
             {{--seleciona o curso de acordo com o checkbox marcado--}}
             {{--<script type="text/javascript">--}}
             {{--$(document).ready(function () {--}}
-            {{----}}
-            {{--$("input[type=checkbox][name='fundamental']:checked").change(function(){--}}
-            {{--var nivel = $(this).val();--}}
+        {{----}}
+                {{--$("input[type=checkbox][name='fundamental']:checked").change(function(){--}}
+                    {{--var nivel = $(this).val();--}}
 
-            {{--$.get('/admin/cursos/get_cursos_jquery/'+nivel, function (cursos){--}}
-            {{--$('#cursos').empty();--}}
-            {{--$.each(cursos, function (key, value){--}}
-            {{--$('#cursos').append('<li><div class="col s3" ><input type="checkbox" name="'+value+'" value="'+key+'">' + value+ '</div></li>');--}}
-            {{--});--}}
-            {{--});--}}
-            {{--});--}}
+                    {{--$.get('/admin/cursos/get_cursos_jquery/'+nivel, function (cursos){--}}
+                        {{--$('#cursos').empty();--}}
+                        {{--$.each(cursos, function (key, value){--}}
+                            {{--$('#cursos').append('<li><div class="col s3" ><input type="checkbox" name="'+value+'" value="'+key+'">' + value+ '</div></li>');--}}
+                        {{--});--}}
+                    {{--});--}}
+                {{--});--}}
             {{--});--}}
             {{--</script>--}}
 
