@@ -14,17 +14,17 @@
         {{--<h4>Cursos</h4>--}}
 
         {{--@foreach($curso as $cur)--}}
-        {{--<ul>--}}
-        {{--<li>--}}
-        {{--<div class="col s3">--}}
+            {{--<ul>--}}
+                {{--<li>--}}
+                    {{--<div class="col s3">--}}
 
-        {{--{!! Form::checkbox('curso_id[]',$cur->id, (in_array($cur->id, $cId)?true:false), ['id'=>$cur->name])!!}--}}
+                        {{--{!! Form::checkbox('curso_id[]',$cur->id, (in_array($cur->id, $cId)?true:false), ['id'=>$cur->name])!!}--}}
 
-        {{--{!! Form::label($cur->name, $cur->name) !!}--}}
+                        {{--{!! Form::label($cur->name, $cur->name) !!}--}}
 
-        {{--</div>--}}
-        {{--</li>--}}
-        {{--</ul>--}}
+                    {{--</div>--}}
+                {{--</li>--}}
+            {{--</ul>--}}
 
         {{--@endforeach--}}
 

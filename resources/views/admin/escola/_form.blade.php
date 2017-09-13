@@ -1,4 +1,4 @@
-@if (session('status'))
+    @if (session('status'))
     <ul class="alert-danger">
         <h5 class="grey-text">Erro :(</h5>
         <li>{{ session('status') }}</li>
@@ -36,15 +36,15 @@
         {!! Form::label('medio', 'Medio') !!}
     </div>
     <div class="col s2">
-        {!! Form::checkbox('superior','superior', null, ['id'=>'superior'])!!}
+         {!! Form::checkbox('superior','superior', null, ['id'=>'superior'])!!}
         {!! Form::label('superior', 'Superior') !!}
     </div>
     <div class="col s2">
-        {!! Form::checkbox('pre_enem','pre_enem', null, ['id'=>'pre_enem'])!!}
+         {!! Form::checkbox('pre_enem','pre_enem', null, ['id'=>'pre_enem'])!!}
         {!! Form::label('pre_enem', 'Pré-enem') !!}
     </div>
     <div class="col s2">
-        {!! Form::checkbox('outros','outros', null, ['id'=>'outros'])!!}
+         {!! Form::checkbox('outros','outros', null, ['id'=>'outros'])!!}
         {!! Form::label('outros', 'Outros') !!}
     </div>
 
