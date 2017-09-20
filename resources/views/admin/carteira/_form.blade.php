@@ -70,7 +70,7 @@
 
         <div class="col s4">
             {!! Form::label('curso_id','Curso:') !!}
-            {!! Form::select('curso_id', $cursos , null, ['placeholder'=>'Selecionar Curso', 'name'=>'curso_id'] )!!}
+            {!! Form::select('curso_id', $curso , null, ['placeholder'=>'Selecionar Curso', 'name'=>'curso_id'] )!!}
         </div>
 
         <div class="col s1">
