@@ -33,7 +33,7 @@ class AdminEscolaController extends Controller
     }
 
     //redireciona para o formulário de cadastro de uma nova escola
-    public function new()
+    public function novo()
     {
         return view('admin.escola.create');
     }
@@ -48,7 +48,7 @@ class AdminEscolaController extends Controller
         $this->validate($request, $this->Escola->rules);
 
         $escola = $this->Escola->create($this->Escola->newescola($request));
-        if($escola):
+        if ($escola):
             $instituicao = $escola;
             return view('admin.endereco.create', compact('instituicao'));
         endif;
@@ -91,11 +91,13 @@ class AdminEscolaController extends Controller
             else:
                 $curso = null;
             endif;
-            foreach ($curso as $c):
-                foreach ($c as $d):
-                    $dados[] = $d;
+            if ($curso):
+                foreach ($curso as $c):
+                    foreach ($c as $d):
+                        $dados[] = $d;
+                    endforeach;
                 endforeach;
-            endforeach;
+            endif;
             $curso = $dados;
 //            dd($curso);
             return view('admin.escola.edit', compact('EscId', 'curso', 'cId', 'relation'));
@@ -129,7 +131,7 @@ class AdminEscolaController extends Controller
             endif;
             $escolaUp->cursos()->sync($cursoId);
 
-            return redirect()->route('escola.list')->with('status', 'Escola ' . $request->nome . ' atualizado com sucesso!');
+            return back()->with('status', 'Escola ' . $request->nome . ' atualizado com sucesso!');
         endif;
 
     }

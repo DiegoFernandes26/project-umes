@@ -15,7 +15,7 @@
         <!--dados pessoais-->
         <div class="dadosPessoais">
             @if($busca->name_social != null)
-                <div class="fieldDado">Nome Social</div>
+                <div class="fieldDado">Nome</div>
                 <div class="dado">{{$busca->name_social}}</div>
             @else
                 <div class="fieldDado">Nome</div>

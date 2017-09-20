@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
                 });
                 Route::group(['prefix' => 'escola'], function () {
                     Route::get('', ['as' => 'escola.list', 'uses' => 'AdminEscolaController@index']);
-                    Route::get('create', ['as' => 'escola.create', 'uses' => 'AdminEscolaController@new']);
+                    Route::get('create', ['as' => 'escola.create', 'uses' => 'AdminEscolaController@novo']);
                     Route::post('store', ['as' => 'escola.store', 'uses' => 'AdminEscolaController@create']);
                     Route::get('edit/{id}', ['as' => 'admin.escola.edit', 'uses' => 'AdminEscolaController@edit']);
                     Route::put('update/{id}', ['as' => 'admin.escola.update', 'uses' => 'AdminEscolaController@update']);

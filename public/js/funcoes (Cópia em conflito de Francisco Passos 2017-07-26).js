@@ -22,10 +22,6 @@ $(document).ready(function () {
     $('.fixo-valida').mask('(00)0000-0000');
     $('.validade-valida').mask('00/00');
 
-
-// habliita máscara de dinheiro
-    $(".dinheiro").maskMoney({showSymbol: true, symbol: "R$ ", decimal: ",", thousands: "."});
-
 //    arrastar foto
 //     $(".draggable").draggable();
 
@@ -152,7 +148,6 @@ $(".cpf-valida").blur(function () {
         $('.cpf-valida').css('background', '#e57373');
     }
 });
-
 function valida_cpf() {
     var cpf = $('.cpf-valida').val();
     cpf = cpf.replace('.', '');
@@ -188,7 +183,6 @@ function valida_cpf() {
     else
         return false;
 }
-
 //valida cpf
 
 
@@ -363,7 +357,7 @@ function deletar_modal(id, name) {
 function editar_modal(id) {
     $('#edit-item').modal('open');
     $('#titulo-modal').html('Editar curso');
-    $("#content-edit").load("/admin/cursos/edit/" + id + " #container", function () {
+    $("#content-edit").load("/admin/cursos/edit/" + id + " #container", function(){
         $('select').material_select();
     });
     $('.carregamento').fadeOut();
@@ -375,13 +369,13 @@ $(".validade-valida").blur(function () {
     var data = $(".validade-valida").val();
     var dia = data.split("/");
     if (data.length == 5) {
+        // alert(dia[0]+" - "+dia[1]);
         if (dia[0] < 1 || dia[0] > 31) {
             $('.validade-valida').css('background', '#e57373');
             $(".validade-valida").focus();
             $('#edit-item').modal('open');
             $('#titulo-modal').html("Erro");
             $('#content-edit').html("O dia de vencimento precisa ser um valor válido.");
-            $('.carregamento').fadeOut();
 
 
         } else if (dia[1] < 1 || dia[1] > 12) {
@@ -394,18 +388,11 @@ $(".validade-valida").blur(function () {
             $('.validade-valida').css('background', 'transparent');
         }
 
-    } else {
+    }else{
         $(".validade-valida").focus();
         $('#edit-item').modal('open');
         $('#titulo-modal').html("Erro");
         $('#content-edit').html("Preencha corretamente o campo data de expiração.");
-        $('.carregamento').fadeOut();
 
     }
-});
-
-$(document).ready(function () {
-    var valor = $('#valorhj').text();
-    var valor2 = valor.split(',');
-    $('#valorhj').html(valor2[0] + "<sup>," + valor2[1] + "</sup>");
 });

@@ -87,7 +87,7 @@ class Escola extends Model
     public function checkRelEscola($id)
     {
         $e = Escola::find($id);
-
+        
         if(count($e->aluno)>0):
             return true;
         else:

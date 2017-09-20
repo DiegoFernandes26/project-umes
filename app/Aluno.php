@@ -163,8 +163,8 @@ class Aluno extends Model
         $jaExiste = ($busca ? $busca : $jaExiste = false);
         //se não for encontrado aluno com o CPF informado, é criado um novo registro
         if (!$jaExiste):
-            $saveCart->name = mb_strtolower(trim($dados->input('name')));
-            $saveCart->name_social = mb_strtolower(trim($dados->input('name_social')));
+            $saveCart->name = trim($dados->input('name'));
+            $saveCart->name_social = trim($dados->input('name_social'));
             $saveCart->sexo = ($dados->input('sexo') ? $dados->input('sexo') : 'm');
             $saveCart->dt_nascimento = $dados->input('dt_nascimento');
             $saveCart->mae = mb_strtolower(trim($dados->input('mae') ? $dados->input('mae') : null));
@@ -216,7 +216,7 @@ class Aluno extends Model
         $valor = $this->Config->orderBy('id')->first();
 
         $update = [
-            'name' => mb_strtolower(trim($dados->input('name'))),
+            'name' => trim($dados->input('name')),
             'name_social' => trim($dados->input('name_social')),
             'sexo' => $dados->input('sexo'),
             'rg' => trim($dados->input('rg')),

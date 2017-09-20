@@ -1,7 +1,7 @@
 {{--{!! dd($pessoa) !!}--}}
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content ">
-    <li><a href="#!">Perfil</a></li>
+    <li><a href="{{route('usuario.edit',['id'=>auth()->user()->id])}}">Perfil</a></li>
     <li><a href="#!">Suporte</a></li>
     <li class="divider"></li>
     <li><a href="{{route('logout')}}">Sair</a></li>

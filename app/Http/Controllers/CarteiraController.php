@@ -183,9 +183,11 @@ class CarteiraController extends Controller
     {
         $aluno = $this->aluno->find($id);
         if (count($aluno) > 0):
-            $cursos = $aluno->curso->lists('name', 'id');
+            $escola = $aluno->escola;
+            $curso = $escola->cursos->lists('name', 'id');
+//
             $endereco = ($this->endereco->find($aluno->endereco_id) ? $this->endereco->find($aluno->endereco_id) : $endereco = null);
-            return view('admin.carteira.edit', compact('aluno', 'cursos', 'endereco'));
+            return view('admin.carteira.edit', compact('aluno', 'curso', 'endereco'));
         else:
             return back()->with('status', 'Aluno não encontrado!');
         endif;

@@ -3,6 +3,7 @@
     @include('admin.menu')
     <div class="container">
         <h3 class="grey-text">Editar carteira:</h3>
+        <h5 class="grey-text">Instituição: {{$aluno->escola->nome}}:</h5>
 
         @if($errors->any())
             <ul class="alert">
