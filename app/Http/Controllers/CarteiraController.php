@@ -97,7 +97,7 @@ class CarteiraController extends Controller
 
         $curso = (count($cursos) > 0 ? $cursos : $curso = false);
         if ($curso):
-            return view('admin.carteira.create', compact('cursos', 'id', 'escola'));
+            return view('admin.carteira.create', compact('curso', 'id', 'escola'));
         else:
             return back()->with('status', 'Não há cursos vinculados à instituição ' . $escola->nome);
         endif;
