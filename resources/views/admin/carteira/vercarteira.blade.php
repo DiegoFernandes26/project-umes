@@ -42,11 +42,11 @@
                 </div>
             </li>
             <li>
-                <div class="collapsible-header"><i class="material-icons">school</i>Dados escolares</div>
+                <div class="collapsible-header"><i class="material-icons">school</i>Dados acadêmicos</div>
                 <div class="collapsible-body">
                     {{--dados--}}
                     <ul class="collection">
-                        <li class="collection-item"><strong>Escola: </strong>{{$busca->escola->nome}}</li>
+                        <li class="collection-item"><strong>Instituição: </strong>{{$busca->escola->nome}}</li>
                         <li class="collection-item"><strong>Curso: </strong>{{$curso->name}}</li>
                         <li class="collection-item"><strong>Nível: </strong>
                             @if($curso->nivel=='1'):
