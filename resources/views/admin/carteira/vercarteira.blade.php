@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
     <nav>
-        <div class="nav-wrapper grey darken-4">
+        <div class="nav-wrapper  light-blue darken-4">
             <a href="#!" class="brand-logo"><img src="{{asset('img/logo_moobile.png')}}" width="50px" style="margin-top: 3px;"></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
