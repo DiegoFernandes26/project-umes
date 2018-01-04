@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="12cab3fa-4fb0-42b5-ba91-f2e48f84cc3c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/carteira/vercarteira.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/carteira/vercarteira.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,7 +21,7 @@
         <entry file="file://$PROJECT_DIR$/resources/views/admin/carteira/vercarteira.blade.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
-              <caret line="4" column="75" lean-forward="false" selection-start-line="4" selection-start-column="75" selection-end-line="4" selection-end-column="75" />
+              <caret line="4" column="110" lean-forward="false" selection-start-line="4" selection-start-column="110" selection-end-line="4" selection-end-column="110" />
               <folding />
             </state>
           </provider>
@@ -478,7 +479,7 @@
       <workItem from="1502395250026" duration="2048000" />
       <workItem from="1502932574138" duration="1652000" />
       <workItem from="1515035027114" duration="706000" />
-      <workItem from="1515035874106" duration="1026000" />
+      <workItem from="1515035874106" duration="1116000" />
     </task>
     <task id="LOCAL-00001" summary="Commit logo">
       <created>1515035599073</created>
@@ -491,7 +492,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="622973000" />
+    <option name="totallyTimeSpent" value="623063000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -848,7 +849,7 @@
     <entry file="file://$PROJECT_DIR$/resources/views/admin/carteira/vercarteira.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
-          <caret line="4" column="75" lean-forward="false" selection-start-line="4" selection-start-column="75" selection-end-line="4" selection-end-column="75" />
+          <caret line="4" column="110" lean-forward="false" selection-start-line="4" selection-start-column="110" selection-end-line="4" selection-end-column="110" />
           <folding />
         </state>
       </provider>
