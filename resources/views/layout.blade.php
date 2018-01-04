@@ -89,6 +89,15 @@
     </div>
 </div>
 
+
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <button class="btn btn btn-flat" style="border: 2px solid #333; border-radius: 20px;">Certificado digital</button>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="{{asset('js/jquery.mask.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/funcoes.js')}}"></script>
