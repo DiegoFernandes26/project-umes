@@ -2,7 +2,7 @@
 @section('content')
     <nav>
         <div class="nav-wrapper cyan">
-            <a href="#!" class="brand-logo">Logo</a>
+            <a href="#!" class="brand-logo">Umes</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="sass.html">Sass</a></li>
