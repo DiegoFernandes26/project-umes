@@ -2,7 +2,7 @@
 @section('content')
     <nav>
         <div class="nav-wrapper cyan">
-            <a href="#!" class="brand-logo"><img src="{{asset('img/logo_mobile.png')}}"></a>
+            <a href="#!" class="brand-logo"><img src="{{public('img/logo_mobile.png')}}"></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
             <ul class="side-nav" id="mobile-demo">
