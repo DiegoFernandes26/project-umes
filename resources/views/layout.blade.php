@@ -93,7 +93,7 @@
 <div class="container">
     <div class="row">
         <div class="col s12">
-            <button class="btn btn btn-flat" style="border: 2px solid #333; border-radius: 20px;">Certificado digital</button>
+            <button class="btn btn btn-flat" style="border: 2px solid #333; border-radius: 20px; width: 100%; margin-top: 3%;">Certificado digital</button>
         </div>
     </div>
 </div>
