@@ -335,8 +335,8 @@ h1.dado-relatorio-cont {
     height: 100px;
     overflow: hidden;
     border-radius: 50%;
-    border: 1px solid #333;
-    box-shadow: 2px 2px #333;
+    border: 5px solid #DDD;
+    /*box-shadow: 2px 2px #333;*/
 }
 .foto-perfil-vizualizar img {
     width: 100%;
