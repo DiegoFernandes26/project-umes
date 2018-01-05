@@ -83,4 +83,17 @@
         </ul>
     </div>
 
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <button class="btn btn btn-flat" style="border: 1px solid #aaa; border-radius: 20px; width: 100%; margin-top: 5%;">
+                    <i class="material-icons left">info</i>  Certificado digital
+                </button>
+            </div>
+        </div>
+    </div>
+
 @stop
