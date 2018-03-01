@@ -83,6 +83,12 @@ class AdminUserController extends Controller
                 'cpf' => "cpf|required|unique:users,cpf,{$user->cpf},cpf",
                 'password' => 'same:confirmpassword|min:6'
             ]);
+            if($request['password'] != null){
+                $request['password'] = bcrypt($request['password']);
+                unset($request['confirmpassword']);
+            }else{
+                unset($request['password']);
+            }
 
             $request['user_id'] = Auth()->user()->id;
             $user->update($request->all());

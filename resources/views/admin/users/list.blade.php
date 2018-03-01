@@ -14,7 +14,7 @@
                                 class="material-icons left">add_circle</i>Novo usuário</a>
                 </div>
                 <div class="col s9 right">
-                    <input type="text" class="campo-busca" placeholder="Buscar curso" id="busca-campo">
+                    <input type="text" class="campo-busca" placeholder="Buscar usuário" id="busca-campo">
                 </div>
             </div>
 
