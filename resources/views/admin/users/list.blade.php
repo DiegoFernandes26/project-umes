@@ -18,11 +18,7 @@
                 </div>
             </div>
 
-            @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-            @endif
+            @include('errors.errors_message')
             {{--usuários--}}
             <ul class="collection with-header" id="collection-item">
                 @foreach($users as $usuario)
@@ -59,7 +55,7 @@
                                         <a href="{{route('usuario.delete', ['id' => $usuario->id])}}"
                                            class="waves-effect waves-light btn-flat red-text text-darken-1">Excluir</a>
                                     @else
-                                        <a href="{{route('usuario.inativar', ['id' => $usuario->id])}}"
+                                        <a href="{{route('usuario.ativar', ['id' => $usuario->id])}}"
                                            class="waves-effect waves-light btn-flat disabled" title="Este usuário possui ações realizados no sistema!">Excluir</a>
                                     @endif
                                 @endif

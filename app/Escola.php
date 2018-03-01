@@ -103,7 +103,7 @@ class Escola extends Model
             foreach($fundamental as $curso):
                 $cursosId[] = $curso->id;
             endforeach;
-            $escoal->cursos->sync($cursosId);
+            $escola->cursos->sync($cursosId);
         endif;
     }
 

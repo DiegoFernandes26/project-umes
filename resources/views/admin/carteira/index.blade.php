@@ -4,11 +4,8 @@
 
     <div class="container top__cem">
         <h3 class="grey-text">ESCOLHA UMA INSTITUIÇÃO<strong>DE ENSINO</strong></h3>
-        @if (session('status'))
-            <div class="alert alert-success">
-                {{ session('status') }}
-            </div>
-        @endif
+        @include('errors.errors_message')
+
         {{--{!! Form::open(['route'=>'cart.create','method'=>'get']) !!}--}}
 
         {{--<div class="input-field col s6">--}}

@@ -4,6 +4,7 @@
 
     <div class="container top__cem">
         <h3 class="grey-text">Configurações</h3>
+
         <div class="row">
             {!! Form::open(['route'=>'config.store', 'method'=>'post', 'files'=>true]) !!}
 

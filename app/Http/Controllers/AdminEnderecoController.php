@@ -46,16 +46,6 @@ class AdminEnderecoController extends Controller
         return redirect()->action('AdminEscolaController@edit',[$request->escola_id])->with('status', 'Instituição e endereço criados com sucesso, agora vincule cursos a esta institução!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * busca a instituição pelo id informado e retorna todos os dados.*
@@ -71,10 +61,13 @@ class AdminEnderecoController extends Controller
             if(count($endereco)>0):
                 return view('admin.endereco.edit', compact('instituicao', 'endereco'));
             else:
-                return back()->with('status','Endereço não encontrado :(');
+                return redirect()
+                    ->route('endereco.add',$idEscola);
             endif;
         else:           
-            return redirect()->route('escola.list')->with('satatus', 'Instituição não encontrada :(');
+            return redirect()
+                ->route('escola.list')
+                ->with('satatus', 'Instituição não encontrada :(');
         endif;
     }
 
@@ -86,10 +79,13 @@ class AdminEnderecoController extends Controller
             if(count($endereco)>0):
                 return view('admin.endereco.edit', compact('instituicao', 'endereco'));
             else:
-                return back()->with('status','Endereço não encontrado :(');
+                return back()
+                    ->with('status','Endereço não encontrado :(');
             endif;
         else:
-            return redirect()->route('escola.list')->with('satatus', 'Instituição não encontrada :(');
+            return redirect()
+                ->route('escola.list')
+                ->with('satatus', 'Instituição não encontrada :(');
         endif;
     }
 
@@ -106,7 +102,9 @@ class AdminEnderecoController extends Controller
         $this->Endereco->find($id)->update($request->all());
         $instituição = \App\Escola::find($request->escola_id);
 
-        return redirect()->route('escola.list')->with('status', 'Endereço da Instituição ' . $instituição->nome . ' atualizado com sucesso :)');
+        return redirect()
+            ->route('escola.list')
+            ->with('status', $instituição->nome . ' - Endereço atualizado com sucesso :)');
     }
 
     /**

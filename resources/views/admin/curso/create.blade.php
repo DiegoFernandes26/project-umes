@@ -1,11 +1,4 @@
-@if($errors->any())
-    <ul class="alert-danger">
-        <h5 class="grey-text">Erro :(</h5>
-        @foreach($errors->all() as $erro)
-            <li>{{$erro}}</li>
-        @endforeach
-    </ul>
-@endif
+
 
 
 <!-- Modal Structure -->

@@ -55,8 +55,7 @@ class Endereco extends Model
      */
     public function updateEndereco($dados, $id)
     {
-        $endereco = Endereco::find($id);
-        $endereco->update([
+        $endereco = Endereco::updateOrCreate(['id'=>$id],[
             'cep'           => $dados->cep,
             'endereco'      => $dados->endereco,
             'numero'        => $dados->numero,

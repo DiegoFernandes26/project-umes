@@ -23,6 +23,37 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $table = 'users';
 
+
+
+    public function aluno()
+    {
+        return $this->hasMany('App\Aluno');
+    }
+
+    public function escola()
+    {
+        return $this->hasMany('App\Escola');
+    }
+
+    public function curso()
+    {
+        return $this->hasMany('App\Curso');
+    }
+
+    public function autoRel()
+    {
+        return $this->hasMany('App\User','user_id');
+    }
+
+    public function mensagem(){
+        return $this->hasOne('App\Mensagens');
+    }
+
+    public function emissoes(){
+        return $this->hasMany('App\Emissoes');
+    }
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -46,26 +77,6 @@ class User extends Model implements AuthenticatableContract,
         'cpf' => 'cpf|required|size:14|unique:users',
         'password' => 'required|same:confirmpassword|min:6',
     ];
-
-    public function aluno()
-    {
-        return $this->hasMany('App\Aluno');
-    }
-
-    public function escola()
-    {
-        return $this->hasMany('App\Escola');
-    }
-
-    public function curso()
-    {
-        return $this->hasMany('App\Curso');
-    }
-
-    public function autoRel()
-    {
-        return $this->hasMany('App\User','user_id');
-    }
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -119,6 +130,7 @@ class User extends Model implements AuthenticatableContract,
     {
         $celular = User::where('celular', $celular)->first();
         $celular = ($celular ? $celular : $celular = false);
+
         if ($celular):
             return $celular->id;
         else:

@@ -1,36 +1,14 @@
 @extends('layout')
 @section('content')
     @include('admin.menu')
-    {{--<link rel="stylesheet" type="text/css" href="../../css/carteira.css">
-    </head>
-    <body>
-
-    <div class="box_cartao">
-        <img src="../../../img/img/cart.jpg">
-
-        <!--código de barras-->
-        --}}{{--<div class="qrCode"><img src="../../../img/img/barcode.jpg"></div>--}}{{--
-
-    </div>
---}}
 
     <div class="container top__cem">
 
 
         <h3 class="grey-text">VERSOS <strong>CADASTRADOS</strong></h3>
         {{--Retorna mensagens de erro--}}
-        @if($errors->any())
-            <ul class="alert-danger">
-                @foreach($errors->all() as $erro)
-                    <li>{{$erro}}</li>
-                @endforeach
-            </ul>
-        @endif
-        @if (session('status'))
-            <ul class="alert-danger">
-                <li>{{ session('status') }}</li>
-            </ul>
-        @endif
+
+
         {{--Fim de retorno de mensagens de erro--}}
 
 
@@ -42,23 +20,19 @@
             <div class="col s9 ">
                 <input type="text" class="campo-busca" placeholder="Buscar verso" id="busca-campo">
             </div>
+
         </div>
+        @include('errors.errors_message')
 
         @if($verso)
             <div class="row" id="cards">
             @foreach($verso as $versos)
 
-                {{--<ul>--}}
-                {{--<li>{{$versos->name}}</li>--}}
-                {{--<li><img src="../{{$versos->img_verso}}"</li>--}}
-                <!-- {{--<li><a href="{{route('cart.verso.excluir', ['id'=>$versos->id])}}">Excluir</a></li>--}} -->
-                    {{--<li><a href="#" onclick="deletar_modal({{$versos->id}},'{{$versos->name}}')">Excluir</a></li>--}}
-                    {{--</ul>--}}
-
-                    <div class="col s4">
+                   <div class="col s4">
                         <div class="card @if ($versos->status==true)ativo_card @endif">
+
                             <div class="card-image">
-                                <img src="../{{$versos->img_verso}}">
+                                <img src="{{asset($versos->img_verso)}}">
                                 <div style="position:absolute;top: 10px;right: 5px; z-index: 999; background: trasparent">
                                     {!! Form::radio('ativo',$versos->id,($versos->status?true:false), ['id'=>$versos->id, 'name'=>'ativo'])!!}
                                     {!! Form::label($versos->id, 'Ativo') !!}

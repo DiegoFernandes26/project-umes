@@ -4,7 +4,7 @@
         <label>
             Grátis
             {!! Form::checkbox('pago', true, (isset($aluno)?($aluno->pago != false?true:false):true)) !!}
-            <span class="lever"></span>
+            <span class="lever red accent-1"></span>
             Pago
         </label>
     </div>
@@ -35,7 +35,7 @@
             {!! Form::label('org_expedidor','Orgão Expedidor:') !!}
             {!! Form::text('org_expedidor', null, ['placeholder'=>'Orgão Expedidor do RG','name'=>'org_expedidor']) !!}
         </div>
- <div class="col s3">
+        <div class="col s3">
             {!! Form::label('matricula','Matricula:') !!}
             {!! Form::text('matricula', null, ['placeholder'=>'Matricula','name'=>'matricula']) !!}
         </div>
@@ -77,6 +77,25 @@
             {!! Form::label('periodo','Período:') !!}
             {!! Form::text('periodo', null, ['placeholder'=>'Período', 'name'=>'periodo']) !!}
         </div>
+
+
+        <?php $config = \App\Configuracoes::all()->first()->dt_expiracao ?>
+        @if(isset($aluno))
+            <div class="col s2">
+                <span>Válida até:</span><br>
+                <p class="{{(isset($aluno)?(date('Y')!= date('Y',strtotime($aluno->dt_validade))?($aluno->dt_validade < date('Y-m-d')?'red':'blue'):'orange'):'')}}-text">
+                    {{date('d-m-Y',strtotime($aluno->dt_validade))}}
+                </p>
+            </div>
+        @else
+            <div class="col s2">
+                <span>Válida até:</span><br>
+                <p class="{{(date('Y')!= date('Y',strtotime($config))?($config <= date('Y-m-d')?'red':''):'orange')}}-text">
+                    {{date('d-m-Y',strtotime($config))}}
+                </p>
+            </div>
+        @endif
+
     </fieldset>
 </div>
 
@@ -112,7 +131,7 @@
             </div>
             {{--preview da foto principal--}}
 
-  {{--preview da foto principal--}}
+            {{--preview da foto principal--}}
             <div class="col s3">
                 <div class="fotoPreview flex-box matricula-preview">
                     <div id="matricula-preview"></div>

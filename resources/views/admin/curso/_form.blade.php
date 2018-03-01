@@ -1,3 +1,5 @@
+@include('errors.errors_message')
+
 <div class="col s8">
     {!! Form::label('name', 'Nome do Curso')!!}
     {!! Form::text('name', null) !!}

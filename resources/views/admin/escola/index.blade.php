@@ -15,23 +15,14 @@
         </div>
 
 
-        @if (session('status'))
-            <ul class="alert-danger">
-                <h5 class="grey-text">Sucesso :)</h5>
-                <li>{{ session('status') }}</li>
-            </ul>
-        @endif
+        @include('errors.errors_message')
+
         <ul class="collection with-header" id="collection-item">
             @foreach($esc as $escola)
                 <li class="collection-item avatar lista-item  grey lighten-5">
                     <div class="dados-edicao-home">
                         <h5 class="texto-list">{{$escola->nome}}</h5>
                     </div>
-                    {{--<td>{{$escola->id}}</td>--}}
-                    {{--<td>{{$escola->cnpj}}</td>--}}
-                    {{--@foreach($escola->cursos as $curso)--}}
-                    {{--<td>{{$curso->name}}</td>--}}
-                    {{--@endforeach--}}
 
                     <div class="bt-edicao">
                         <div>

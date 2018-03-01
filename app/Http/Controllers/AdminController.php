@@ -92,7 +92,7 @@ class AdminController extends Controller
         if (count($sistema) > 0):
             return view('admin.config_sistema.edit', compact('sistema'));
         else:
-            return back()->with('status', '<sapan class="error">Não foram encontrados dados com o parâmetros informado!</sapan>');
+            return back()->withErrors('status', '<sapan class="error">Não foram encontrados dados com o parâmetros informado!</sapan>');
         endif;
     }
 
@@ -110,20 +110,11 @@ class AdminController extends Controller
         $dados = Configuracoes::find($id);
         if($dados):
             $this->Configuracoes->createConfig($request, $dados);
-            return back()->withErrors(array('logo_sistema' => 'Atualizado com sucesso!'));
+            return back()->with('status','Atualizado com sucesso!');
         else:
             return back()->withErrors('Ocorreu um erro inesperado ao tentar atualizar, tente novamente!');
         endif;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+
 }

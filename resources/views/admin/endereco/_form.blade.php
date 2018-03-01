@@ -12,7 +12,7 @@
         <div class="col s4">
             <div class="col-md-6">
                 {!!Form::label('endereco', 'Endereço', ['class'=>'col-md-4 control-label']) !!}
-                {!!Form::text('endereco', (isset($endereco)?$endereco->endereco:null), ['placeholder'=>'Endereço','class'=>'col-md-4 control-label', 'name'=>'endereco', 'id'=>'rua']) !!}
+                {!!Form::text('endereco',(isset($endereco)?$endereco->endereco:false),['placeholder'=>'Rua Exemplo','class'=>'col-md-4 control-label', 'name'=>'endereco', 'id'=>'endereco']) !!}
             </div>
         </div>
         <div class="col s1">

@@ -35,6 +35,7 @@ class CreateAlunosTable extends Migration
             $table->string('periodo')->nullable();
             $table->boolean('pago')->nullable();
             $table->float('valor');
+            $table->boolean('auto_emissao')->default(false);
             //chaves estrangeiras
             $table->integer('endereco_id')->unsigned();
             $table->foreign('endereco_id')->references('id')->on('enderecos')->onDelete('cascade');

@@ -1,18 +1,4 @@
-@if (session('status'))
-    <ul class="alert-danger">
-        <h5 class="grey-text">Erro :(</h5>
-        <li>{{ session('status') }}</li>
-    </ul>
-@endif
-
-@if($errors->any())
-    <ul class="alert-danger">
-        <h5 class="grey-text">Erro :(</h5>
-        @foreach($errors->all() as $erro)
-            <li>{{$erro}}</li>
-        @endforeach
-    </ul>
-@endif
+@include('errors.errors_message')
 
 <div class="row">
     <div class="col s4">
@@ -63,8 +49,8 @@
     </div>
     <div class="col s3">
         <div class="col-md-6">
-            {!! Form::label('tipo', 'Nível de Usuário') !!}
-            {!! Form::select('tipo',['2'=>'Usuário','1' => 'Admin'], (isset($user->nivel) ? ($user->nivel == 1 ? 1 : 2) : null) , ['name'=>'tipo']) !!}
+            {!! Form::label('nivel', 'Nível de Usuário') !!}
+            {!! Form::select('nivel',['2'=>'Usuário','1' => 'Admin'], (isset($user->nivel) ? ($user->nivel == 1 ? 1 : 2) : null) , ['name'=>'nivel']) !!}
         </div>
     </div>
 

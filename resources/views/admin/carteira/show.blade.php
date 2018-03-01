@@ -1,12 +1,12 @@
 @extends('layout')
 @section('content')
     @include('admin.menu')
-    <link rel="stylesheet" type="text/css" href="../../css/carteira.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/carteira.css')}}">
     </head>
     <body>
 
     <div class="box_cartao">
-        <img src="../../../{{$config->img_carteira}}">
+        <img src="{{asset($config->img_carteira)}}">
 
         <div class="foto-pessoa preview">
             {{--<img src="../../../{{$busca->foto}}" class="draggable">--}}
@@ -53,7 +53,7 @@
         </div>
 
 
-        <div class="anoVigente">{{date('Y', strTotime($busca->created_at))}}</div>
+        <div class="anoVigente">{{date('Y', strTotime($busca->dt_validade))}}</div>
         <!--código de barras-->
         {{--<div class="qrCode"><img src="../../../img/img/barcode.jpg"></div>--}}
         <div class="qrCode">
@@ -65,7 +65,7 @@
     {{--CONTEÚDO DO VERSO DA CARTEIRA--}}
     @if($verso)
         <div class="box_cartao verso-print" style="display: none">
-            <img src="../../../{{$verso->img_verso}}">
+            <img src="{{asset($verso->img_verso)}}">
         </div>
     @else:
     <h3 class="grey-text">Não existem campanhas de verso cadastradas.</h3>
@@ -80,7 +80,7 @@
             <div class="col s12">
                 <fieldset>
                     <legend>Cortar imagem do perfil</legend>
-                    <img id="image" src="../../../{{$busca->foto}}">
+                    <img id="image" src="{{asset($busca->foto)}}">
                 </fieldset>
             </div>
         </div>

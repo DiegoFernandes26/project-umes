@@ -103,6 +103,21 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('cursos/{id}', 'CarteiraController@cursos');
 
             Route::get('pdf/{id}', ['as' => 'cart.pdf', 'uses' => 'CarteiraController@geraPDF']);
+
+            //            colocar aqui as rotas de análise das carteiras criadas por alunos
+            Route::group(['prefix'=>'solicitacoes', 'as'=>'solicitacoes.'], function(){
+                Route::get('index',['as'=>'index','uses'=>'SolicitacaoCarteirasController@index']);
+                Route::get('analisar/{id}',['as'=>'analisar','uses'=>'SolicitacaoCarteirasController@analisar']);
+                Route::get('aprovar/{id}',['as'=>'apr','uses'=>'SolicitacaoCarteirasController@aprovar']);
+                Route::get('reprovar/{id}',['as'=>'rep','uses'=>'SolicitacaoCarteirasController@reprovar']);
+                Route::get('aprovadas',['as'=>'aprovadas','uses'=>'SolicitacaoCarteirasController@aprovadas']);
+                Route::get('desaprovar/{id}',['as'=>'des','uses'=>'SolicitacaoCarteirasController@desaprovar']);
+                Route::get('pendentes',['as'=>'pendentes','uses'=>'SolicitacaoCarteirasController@pendentes']);
+                Route::get('emiti/{id}',['as'=>'emitir','uses'=>'SolicitacaoCarteirasController@emitir']);
+                Route::get('hist/emissao/carteira/{id}',['as'=>'historicoEmissoesPorCarteira','uses'=>'SolicitacaoCarteirasController@historicoEmissoesPorCarteira']);
+
+                Route::post('mensagem/{id}',['as'=>'mensagem','uses'=>'SolicitacaoCarteirasController@createMensagem']);
+            });
         });
     });
 });

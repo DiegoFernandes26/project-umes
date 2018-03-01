@@ -15,42 +15,20 @@ class Aluno extends Model
     protected $Endereco;
     protected $Carbon;
     protected $Config;
-    protected $Img;
 
     public function __construct()
     {
         $this->Endereco = new Endereco;
         $this->Carbon = new Carbon();
         $this->Config = new Configuracoes();
-        $this->Img = new Imagens();
     }
 
     protected $fillable = [
-        'name',
-        'name_social',
-        'sexo',
-        'rg',
-        'cpf',
-        'sexo',
-        'org_expedidor',
-        'dt_nascimento',
-        'celular',
-        'tel_fixo',
-        'email',
-        'mae',
-        'matricula',
-        'endereco_id',
-        'curso_id',
-        'matricula',
-        'periodo',
-        'pago',
-        'valor',
-        'dt_validade',
-        'foto',
-        'rg_frente',
-        're_verso',
-        'compo_matricula',
-        'user_id'
+        'name','name_social','sexo','rg','cpf','org_expedidor',
+        'dt_nascimento','celular','tel_fixo','email','mae','matricula',
+        'endereco_id','curso_id','matricula','periodo','pago','valor',
+        'dt_validade','foto','rg_frente','re_verso','comp_matricula',
+        'user_id','status','view_by','status'
     ];
 
     public $rules = [
@@ -118,6 +96,17 @@ class Aluno extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function mensagem()
+    {
+        return $this->hasOne('App\Mensagens');
+    }
+
+    public function emissoes()
+    {
+        return $this->hasMany('App\Emissoes', 'aluno_id');
+    }
+
+
     /*
      * Verifica na tabela configurações, e compara com a data atual,
      * @return string $dt_validade
@@ -147,21 +136,18 @@ class Aluno extends Model
         return date('Y-m-d', strtotime($dt_validade));
     }
 
-//    public function getDtNascimentoAttribute($value)
-//    {
-//        return date('d-m-Y', strtotime($value));
-//    }
 
-    public function createCarteira($dados)
+    public function FormataCarteira($dados)
     {
+        $configuracoes = $this->Config->orderBy('id')->first();
         $saveCart = new Aluno();
-        //dd($this->Carbon->addYears(1)->year, $dt->dt_expiracao);
+        $diretorio = 'carteira';
 
-        $valor = $this->Config->orderBy('id')->first();
-
-        $busca = Aluno::where('cpf', '=', $dados->input('cpf'))->first();
+        $busca = Aluno::where('cpf', $dados->input('cpf'))->first();
         $jaExiste = ($busca ? $busca : $jaExiste = false);
         //se não for encontrado aluno com o CPF informado, é criado um novo registro
+
+
         if (!$jaExiste):
             $saveCart->name = trim($dados->input('name'));
             $saveCart->name_social = trim($dados->input('name_social'));
@@ -170,7 +156,7 @@ class Aluno extends Model
             $saveCart->mae = mb_strtolower(trim($dados->input('mae') ? $dados->input('mae') : null));
             $saveCart->rg = $dados->input('rg');
             $saveCart->cpf = $dados->input('cpf');
-            $saveCart->dt_validade = $this->dtValidade();
+            $saveCart->dt_validade = $configuracoes->dt_expiracao;
             $saveCart->org_expedidor = mb_strtolower(trim($dados->input('org_expedidor') ? $dados->input('org_expedidor') : null));
             $saveCart->celular = ($dados->input('celular') ? $dados->input('celular') : null);
             $saveCart->tel_fixo = ($dados->input('tel_fixo') ? $dados->input('tel_fixo') : null);
@@ -178,7 +164,7 @@ class Aluno extends Model
             $saveCart->matricula = ($dados->input('matricula') ? $dados->input('matricula') : null);
             $saveCart->periodo = ($dados->input('periodo') ? $dados->input('periodo') : null);
             $saveCart->pago = ($dados->input('pago') ? $dados->input('pago') : "nao");
-            $saveCart->valor = ($dados->input('pago') ? $valor->valor : 0);
+            $saveCart->valor = ($dados->input('pago') ? $configuracoes->valor : 0);
 
             $endereco = $this->Endereco->createEndereco($dados);
             $saveCart->endereco_id = ($endereco ? $endereco : null);
@@ -186,34 +172,37 @@ class Aluno extends Model
             $saveCart->escola_id = $dados->input('escola_id');
             $saveCart->curso_id = $dados->input('curso_id');
             $saveCart->user_id = Auth()->user()->id;
-            $saveCart->foto = $this->Img->createImagem($dados->foto);
+            $saveCart->save();
+
+
+            $id = $saveCart->id;
+            //gera o código da carteira apos a criação desta
+            $this->gerarCodigoUnico($saveCart->id);
+            $saveCart->foto = Imagens::saveImage($dados->foto, $id, $diretorio,300);
 
             if (!empty($dados->rg_frente)):
-                $saveCart->rg_frente = $this->Img->createImagem($dados->rg_frente);
+                $saveCart->rg_frente = Imagens::saveImage($dados->rg_frente, $id, $diretorio,600);
             endif;
             if (!empty($dados->rg_verso)):
-                $saveCart->rg_verso = $this->Img->createImagem($dados->rg_verso);
+                $saveCart->rg_verso = Imagens::saveImage($dados->rg_verso, $id, $diretorio,600);
             endif;
             if (!empty($dados->comp_matricula)):
-                $saveCart->comp_matricula = $this->Img->createImagem($dados->comp_matricula);
+                $saveCart->comp_matricula = Imagens::saveImage($dados->comp_matricula, $id, $diretorio,600);
             endif;
             $saveCart->save();
 
-            //gera o código da carteira apos a criação desta
-            $this->gerarCodigoUnico($saveCart->id);
-            $busca = $saveCart;
-
-            return $busca;
+            return $saveCart;
         else:
             return false;
         endif;
-
     }
+
 
     public function atualizarAluno($aluno, $dados, $id)
     {
 
         $valor = $this->Config->orderBy('id')->first();
+        $diretorio = 'carteira';
 
         $update = [
             'name' => trim($dados->input('name')),
@@ -232,60 +221,31 @@ class Aluno extends Model
             'pago' => ($dados->input('pago') ? $dados->input('pago') : 0),
             'valor' => ($dados->input('pago') ? $valor->valor : 0),
             'curso_id' => $dados->input('curso_id'),
-            'user_id' => Auth()->user()->id
+            'user_id' => ($aluno->user_id != Auth()->user()->id ? $aluno->user_id : Auth()->user()->id),
         ];
         //apaga a foto da pasta e cria outra no banco.
         if (count($aluno) > 0):
             if (!empty($dados->file('foto'))):
                 File::delete($aluno->foto);
-                $aluno->update(['foto' => $this->Img->createImagem($dados->foto)]);
+                $aluno->update(['foto' => Imagens::saveImage($dados->foto, $id, $diretorio,300)]);
             endif;
             if (!empty($dados->file('rg_frente'))):
                 File::delete($aluno->rg_frente);
-                $aluno->update(['rg_frente' => $this->Img->createImagem($dados->rg_frente)]);
+                $aluno->update(['rg_frente' => Imagens::saveImage($dados->rg_frente, $id, $diretorio,600)]);
             endif;
             if (!empty($dados->file('rg_verso'))):
                 File::delete($aluno->rg_verso);
-                $aluno->update(['rg_verso' => $this->Img->createImagem($dados->rg_verso)]);
+                $aluno->update(['rg_verso' => Imagens::saveImage($dados->rg_verso, $id, $diretorio,600)]);
             endif;
             if (!empty($dados->file('comp_matricula'))):
                 File::delete($aluno->comp_matricula);
-                $aluno->update(['comp_matricula' => $this->Img->createImagem($dados->comp_matricula)]);
+                $aluno->update(['comp_matricula' => Imagens::saveImage($dados->comp_matricula, $id, $diretorio,600)]);
             endif;
         endif;
 
         return $update;
     }
 
-
-//    public function image($file)
-//    {
-//        if (Input::file()):
-//            //inicio criação do nome da imagem
-//            $data = \Carbon\Carbon::now();
-//            $dt = $data->ToDateString();
-//            $micro = $data->micro;
-//            $hr = $data->format('H-i-s-m');
-//            $dtHora = $hr . '-' . $micro;
-//
-//            //criando diretório
-//            $diretorio = 'img/' . $data->year . "/" . $data->month . "/" . $data->day;
-//            //se não existir ele cria o diretorio
-//            if (!file_exists($diretorio)):
-//                mkdir($diretorio, 0777, true);
-//            endif;
-//
-//            //data e hora servem para nomear a imagem de maneira única, concatenada com a extensão do arquivo.
-//            $imgName = $dtHora . '.' . $file->getClientOriginalExtension();
-//
-//            $caminho = $diretorio . '/' . $imgName;
-//            //salva a imagem redimensionada no caminho indicado.
-//            $redImagem = Image::make($file->getRealpath())->resize(490, 600)->save($caminho);
-//            //$img->destroy();
-//        endif;
-//        return $caminho;
-
-//    }
 
     /*
      * Através do id passado, busca o aluno, ver se o codigo de carteira ja existe, se não existe ele cria.

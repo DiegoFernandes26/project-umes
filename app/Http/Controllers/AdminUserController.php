@@ -48,14 +48,18 @@ class AdminUserController extends Controller
         return view('admin.users.list', compact('users', 'relation'));
     }
 
-
+    /*
+     * Retornar um registro de usuário para ser Editado.
+     * @param $id
+     */
     public function getEdit($id)
     {
         $user = User::find($id);
         if (count($user) > 0):
             return view('admin.users.editar', compact('user'));
         else:
-            return back();
+            return back()
+                ->withErrors('Usuário não encontrado :(');
         endif;
     }
 
@@ -68,34 +72,30 @@ class AdminUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        dd($request->all());
-//        dd($this->User->cpfUnico($request->cpf));
+        $user = User::find($id);
 
-        $idJaCadastrado = $this->User->cpfUnico($request->cpf);
-        $emailJaCadastrado = $this->User->emailUnico($request->email);
-        $celularJaCadastrado = $this->User->celularUnico($request->celular);
-        if ($idJaCadastrado):
-            if ($idJaCadastrado != $id):
-                return back()->withInput()->with('status', 'O CPF informado já está em uso!');
-            elseif ($emailJaCadastrado != $id):
-                return back()->withInput()->with('status', 'O Email informado já está em uso!');
-            elseif ($celularJaCadastrado != $id):
-                return back()->withInput()->with('status', 'O Celular informado já está em uso!');
-            else:
-                $this->validate($request, [
-                    'name' => 'required|max:255',
-                    'email' => 'required|email|max:255',
-                    'celular' => 'required',
-                    'cpf' => 'cpf|required',
-                    'password' => 'required|same:confirmpassword|min:6'
-                ]);
-                $user = User::find($id);
-                $user->update($request->all());
-                return redirect()->route('usuario.list')->with('status', 'Usuário atualizado com sucesso!');
-            endif;
+        if ($user):
+
+            $this->validate($request, [
+                'name' => 'required|max:255',
+                'email' => "required|email|max:255|unique:users,email,{$user->email},email",
+                'celular' => "required|celular_com_ddd|unique:users,celular,{$user->celular},celular",
+                'cpf' => "cpf|required|unique:users,cpf,{$user->cpf},cpf",
+                'password' => 'same:confirmpassword|min:6'
+            ]);
+
+            $request['user_id'] = Auth()->user()->id;
+            $user->update($request->all());
+            return redirect()
+                ->route('usuario.list')
+                ->with('status', 'Usuário'.$user->name.' atualizado com sucesso!');
+        else:
+            return back()
+                ->withErrors('Registro de usuário não encontrado :(');
         endif;
 
     }
+
     /*
      * Recupera o usuário através do id, caso esteja com "status" = 1 muda para "status"=0 e vice-versa.
      */
@@ -103,10 +103,10 @@ class AdminUserController extends Controller
     {
         $user = User::find($id);
         if ($user):
-            if($user->status == 0):
-                $user->update(['status'=>1]);
+            if ($user->status == 0):
+                $user->update(['status' => 1]);
             else:
-                $user->update(['status'=>0]);
+                $user->update(['status' => 0]);
             endif;
         endif;
     }

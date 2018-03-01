@@ -1,18 +1,6 @@
 {{--Incio mensagens de erro--}}
-@if (session('status'))
-    <ul class="alert-danger">
-        <li>{{ session('status') }}</li>
-    </ul>
-@endif
+@include('errors.errors_message')
 
-@if($errors->any())
-    <ul class="alert-danger">
-        <h5 class="grey-text">Erro :(</h5>
-        @foreach($errors->all() as $erro)
-            <li>{{$erro}}</li>
-        @endforeach
-    </ul>
-@endif
 <div class="row">
     {{--Fim das mensagens de erro--}}
     <div class="col s12">
@@ -27,9 +15,13 @@
         {!! Form::label('valor', 'Valor da carteira:') !!}
         {!! Form::text('valor', null, ['name'=>'valor','class'=>'dinheiro']) !!}
     </div>
+    {{--<div class="col s3">--}}
+        {{--{!! Form::label('dt_expiracao', 'Data de Expiração:') !!}--}}
+        {{--{!! Form::text('dt_expiracao', null, ['placeholder'=>'Ex: 31/03','name'=>'dt_expiracao', 'class'=>'validade-valida']) !!}--}}
+    {{--</div>--}}
     <div class="col s3">
         {!! Form::label('dt_expiracao', 'Data de Expiração:') !!}
-        {!! Form::text('dt_expiracao', null, ['placeholder'=>'Ex: 31/03','name'=>'dt_expiracao', 'class'=>'validade-valida']) !!}
+        {!! Form::date('dt_expiracao', null, ['name'=>'dt_expiracao']) !!}
     </div>
     <div class="col s6">
         <div class="file-field input-field">

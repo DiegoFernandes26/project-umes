@@ -79,6 +79,7 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5(strtolower(trim($email))) .
     <li><a href="{{route('cart.all')}}"><i class="material-icons">credit_card</i>Carteira</a></li>
     @if(Auth()->user()->nivel <= 1)
     <li><a href="{{route('cart.verso')}}"><i class="material-icons">filter</i>Campanha</a></li>
+    {{--<li><a href="{{route('solicitacoes.index')}}"><i class="material-icons">filter</i>Solicitações</a></li>--}}
     @endif
     <li>
         <div class="divider"></div>

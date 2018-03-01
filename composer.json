@@ -12,7 +12,8 @@
         "simplesoftwareio/simple-qrcode": "~1",
         "intervention/image": "^2.3",
         "dompdf/dompdf": "^0.8.0",
-        "barryvdh/laravel-dompdf": "^0.8.0"
+        "barryvdh/laravel-dompdf": "^0.8.0",
+        "doctrine/dbal": "^2.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

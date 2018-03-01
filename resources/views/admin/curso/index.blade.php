@@ -17,12 +17,8 @@
 
 
         {{--FORM - inicio--}}
-        @if (session('status'))
-            <ul class="alert-danger">
-                <h5 class="grey-text">Sucesso :)</h5>
-                <li>{{ session('status') }}</li>
-            </ul>
-        @endif
+        @include('errors.errors_message')
+
         <p>{!! count($cursos) !!} Cursos cadastrados</p>
         @if(count($cursos) > 0)
             <div class="row">

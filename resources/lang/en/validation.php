@@ -74,7 +74,7 @@ return [
     ],
     'string'               => ':attribute deve ser uma string',
     'timezone'             => ':attribute deve ser uma timezone válida.',
-    'unique'               => 'O ":attribute" informado já está em uso em nosso sistema.',
+    'unique'               => 'O ":attribute" informado já está em uso.',
     'url'                  => 'O formato de ":attribute" é inválido.',
     
 
@@ -122,6 +122,7 @@ return [
         'curso_id'          => 'Curso',
         'dt_expiracao'      => 'Data de Expiração',
         'titulo'            => 'Título',
+        'conteudo'          => 'Mensagem',//usado na view 'admin/solicitacoes/carteira.blade'
     ],
 
 ];

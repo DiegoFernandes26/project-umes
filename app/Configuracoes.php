@@ -56,40 +56,35 @@ class Configuracoes extends Model
         $valor = str_replace(',', '.', str_replace('.', '', trim(str_replace('R$', '', $r->valor))));
 
         //diretorio onde será salva a imagem.
-        $dir = 'img/img';
+        $dir = 'configuracoes';
 
         $dados->titulo = $titulo;
         $dados->descricao = $descricao;
         $dados->valor = $valor;
         $dados->dt_expiracao = $r->dt_expiracao;
+        $dados->user_id = auth()->user()->id;
+        $dados->save();
 
         if($update):
             $this->criaNoBancoEdeletnaPasta($request, $update, $dir);
         else:
             if ($request->logo_sistema):
-                $dados->logo_sistema = $this->Img->createImagem($request->logo_sistema, $dir);
+                $dados->logo_sistema = Imagens::saveImage($request->logo_sistema, $dados->id, $dir, 600);
             endif;
             if ($request->img_carteira):
-                $dados->img_carteira = $this->Img->createImagem($request->img_carteira, $dir);
+                $dados->img_carteira = Imagens::saveImage($request->img_carteira, $dados->id, $dir, 600);
             endif;
         endif;
-
-        $dados->user_id = auth()->user()->id;
         $dados->save();
+
         return $dados;
     }
 
-    //falta configurar para excluir as imagens da pasta.
-
-    public function updateConfig($request, $id)
-    {
-
-    }
 
     public function criaNoBancoEdeletnaPasta($request, $dados, $dir)
     {
         if($request->logo_sistema):
-            $imagem = $this->Img->createImagem($request->logo_sistema, $dir);
+            $imagem = Imagens::saveImage($request->logo_sistema, $dados->id, $dir, 600);
             $apagar = $dados->logo_sistema;
             $sucesso = $dados->update(['logo_sistema'=>$imagem]);  
             // dd($sucesso, $dados->logo_sistema, $imagem, $apagar);      
@@ -100,7 +95,7 @@ class Configuracoes extends Model
 
         if($request->img_carteira):
             $apagar = $dados->img_carteira;
-            $sucesso = $dados->update(['img_carteira'=>$this->Img->createImagem($request->img_carteira, $dir)]);
+            $sucesso = $dados->update(['img_carteira'=>Imagens::saveImage($request->img_carteira, $dados->id, $dir, 600)]);
             if($sucesso):
                 File::delete($apagar);
             endif;

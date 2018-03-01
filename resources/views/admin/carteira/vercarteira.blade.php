@@ -18,7 +18,7 @@
             <div class="col s12 grey lighten-3 case-perfil-vizualiza" style="padding: 4% 0;">
                 <div class="chip">Perfil</div>
                 <div class="foto-perfil-vizualizar">
-                    <img src="../../{{$busca->foto}}">
+                    <img src="{{asset($busca->foto)}}">
                 </div>
                 <h4 style="text-transform: uppercase">{{$busca->name}}</h4>
                 <h6><strong>CPF: </strong>{{$busca->cpf}}</h6>
@@ -72,7 +72,7 @@
                     <fieldset>
                         <legend>RG</legend>
                         @if($busca->rg_frente)
-                            <img src="../../{{$busca->rg_frente}}" class="materialboxed">
+                            <img src="{{asset($busca->rg_frente)}}" class="materialboxed">
                         @else
                             <p>Indisponível</p>
                         @endif

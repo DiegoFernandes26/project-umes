@@ -20,7 +20,6 @@ class CarteiraController extends Controller
 {
     protected $aluno;
     protected $escolas;
-    protected $endereco;
 
     /**
      * Display a listing of the resource.
@@ -31,7 +30,6 @@ class CarteiraController extends Controller
     {
         $this->aluno = $aluno;
         $this->escola = new Escola();
-        $this->endereco = new Endereco();
     }
 
     /*
@@ -39,7 +37,7 @@ class CarteiraController extends Controller
      */
     public function show()
     {
-        $alunos = $this->aluno->orderBy('id', 'desc')->get();
+        $alunos = Aluno::orderBy('id','desc')->get();
         return view('admin.carteira.listscarteiras', compact('alunos'));
     }
 
@@ -99,7 +97,8 @@ class CarteiraController extends Controller
         if ($curso):
             return view('admin.carteira.create', compact('curso', 'id', 'escola'));
         else:
-            return back()->with('status', 'Não há cursos vinculados à instituição ' . $escola->nome);
+            return back()
+                ->with('status', 'Não há cursos vinculados à instituição ' . $escola->nome);
         endif;
 
     }
@@ -112,18 +111,21 @@ class CarteiraController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
-        //usa a classe Aluno
+        $endereco = new Endereco();
         $this->validate($request, $this->aluno->rules, $this->aluno->messages);
-        $this->validate($request, $this->endereco->rules);
+        $this->validate($request, $endereco->rules);
 
         $aluno = new Aluno();
-        $busca = $aluno->createCarteira($request);
+        $busca = $aluno->FormataCarteira($request);
+
         if ($busca):
             $curso = $busca->curso;
-            return redirect()->route('cart.all', compact('busca', 'curso'))->with('status', 'Aluno(a) ' . $busca->name . ' cadastrado(a) com sucesso!');
+            return redirect()
+                ->route('cart.all', compact('busca', 'curso'))
+                ->with('status', 'Aluno(a) ' . $busca->name . ' cadastrado(a) com sucesso!');
         else:
-            return back()->with('status', 'Houve algum erro inesperado ao cadastrar aluno!');
+            return back()
+                ->with('status', 'Houve algum erro inesperado ao cadastrar aluno!');
         endif;
     }
 
@@ -144,31 +146,33 @@ class CarteiraController extends Controller
      */
     public function storeCartVerso(Request $request)
     {
-//        dd($request->all());
-        $imagem = new Imagens();
         $verso = new Verso();
 
         $this->validate($request, $verso->rules);
 
-        $dir = 'img/img';
+        $dir = 'campanhas';
 
-        $name = trim(ucwords(mb_strtolower($request->input('name'))));
-        $verso->name = $name;
-        $verso->img_verso = $imagem->createImagem($request->img_verso, $dir);
-        $verso->user_id = Auth()->user()->id;
-        $verso->save();
+        $dados = $request->all();
+        unset($dados['img_verso']);
+        unset($dados['_token']);
+        $dados['user_id'] = Auth()->user()->id;
+        $CreateVerso = $verso->firstOrCreate($dados);
+
+        $CreateVerso->update(['img_verso' => Imagens::saveImage($request->img_verso, $CreateVerso->id, $dir, 600)]);
+
 
         return back()->with('status', 'Campanha criada com sucesso!');
 
     }
+
     /*
      * Qaundo clicado marca em todos os campos "status" com false
      * e depois marca o campo "status" correspondente ao $id com true.
      */
     public function ativaVerso($id)
     {
-        Verso::where('id','>=',1)->update(['status'=>false]);
-        $result = Verso::find($id)->update(['status'=>true]);
+        Verso::where('id', '>=', 1)->update(['status' => false]);
+        $result = Verso::find($id)->update(['status' => true]);
         return Response()->json($result);
     }
 
@@ -182,12 +186,15 @@ class CarteiraController extends Controller
     public function edit($id)
     {
         $aluno = $this->aluno->find($id);
+        $endereco = new Endereco();
+        $config = Configuracoes::all()->first();
         if (count($aluno) > 0):
             $escola = $aluno->escola;
             $curso = $escola->cursos->lists('name', 'id');
 //
-            $endereco = ($this->endereco->find($aluno->endereco_id) ? $this->endereco->find($aluno->endereco_id) : $endereco = null);
-            return view('admin.carteira.edit', compact('aluno', 'curso', 'endereco'));
+            $endereco = ($aluno->endereco_id > 0 ? $endereco->find($aluno->endereco_id) : $endereco = null);
+
+            return view('admin.carteira.edit', compact('aluno', 'curso', 'endereco', 'config'));
         else:
             return back()->with('status', 'Aluno não encontrado!');
         endif;
@@ -204,19 +211,23 @@ class CarteiraController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $endereco = new Endereco();
         $this->validate($request, $this->aluno->rulesUpdate, $this->aluno->messages);
-        $this->validate($request, $this->endereco->rules);
+        $this->validate($request, $endereco->rules);
         $aluno = Aluno::find($id);
+
+
+        $configuracoes = Configuracoes::all()->first();
+
         if (count($aluno) > 0):
             $update = $aluno->update($this->aluno->atualizarAluno($aluno, $request, $id));
-            $endereco = $this->endereco->updateEndereco($request, $aluno->endereco_id);
-            if($request->renovar):
-                $aluno->update(['dt_validade'=>$this->aluno->dtValidade()]);
-                return redirect()->route('cart.all')->with('status', 'Carteira de '.$aluno->name.' renovada com sucesso!');
+            $endereco = $endereco->updateEndereco($request, $aluno->endereco_id);
+            if ($request->renovar || $request->atualizarData):
+                $aluno->update(['dt_validade' => $configuracoes->dt_expiracao]);
+                return redirect()->route('cart.all')->with('status', 'Carteira de ' . $aluno->name . ' renovada com sucesso!');
             else:
-                return redirect()->route('cart.all')->with('status', 'Cadastro de '.$aluno->name.' atualizado com sucesso');
-            endif;           
+                return redirect()->route('cart.all')->with('status', 'Cadastro de ' . $aluno->name . ' atualizado com sucesso');
+            endif;
         else:
             return redirect()->route('cart.index')->with('status', 'Aluno não encontrado :/');
         endif;
@@ -232,11 +243,32 @@ class CarteiraController extends Controller
     public function destroy($id)
     {
         $carteira = Aluno::find($id);
-        //antes de deletar o registro no banco, deleta os arquivos da pastas.        
-        $carteira->delete();
-        File::delete($carteira->foto, $carteira->rg_frente, $carteira->rg_verso, $carteira->comp_matricula);
-        Endereco::find($carteira->endereco_id)->delete();
-        return back()->with('status', 'Aluno deletado com sucesso!');
+
+        if ($carteira) {
+            //verifica o "status" antes de deletar
+            if (
+                ($carteira->status == "Aguadando pagamento"
+                    || $carteira->status == "Em análise"
+                    || $carteira->status == "Paga"
+                    || $carteira->status == "Disponível"
+                    || $carteira->status == "Em disputa"
+                )
+                && $carteira->dt_validade > date('Y-m-d')
+            ) {
+                return back()
+                    ->withErrors('Você não pode excluir o registro de ' . $carteira->name . ' pois o status atual é - ' . $carteira->status . '.');
+            } else {
+                //antes de deletar o registro no banco, deleta os arquivos da pastas.
+                $carteira->delete();
+                File::delete($carteira->foto, $carteira->rg_frente, $carteira->rg_verso, $carteira->comp_matricula);
+                Endereco::find($carteira->endereco_id)->delete();
+                return back()
+                    ->with('status', 'Aluno deletado com sucesso!');
+            }
+        } else {
+            return back()
+                ->withErrors('Registro não encontrado :(.');
+        }
     }
 
     /*
@@ -255,7 +287,6 @@ class CarteiraController extends Controller
 
     public function geraPDF($id)
     {
-
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadView('admin.carteira.pdf', compact('id'));
         return $pdf->stream();

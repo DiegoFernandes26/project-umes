@@ -9,14 +9,7 @@
                 <h5 class="grey-text">Escola: {{$escola->nome}}</h5>
             </div>
 
-        @if($errors->any())
-            <ul class="">
-                @foreach($errors->all() as $erro)
-                    <li>{{$erro}}</li>
-                @endforeach
-
-            </ul>
-        @endif
+            @include('errors.errors_message')
         </div>
         {!! Form::open(['route'=>'cart.store','method'=>'post', 'files'=>true]) !!}
 
