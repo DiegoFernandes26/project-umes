@@ -112,6 +112,7 @@ class AdminEscolaController extends Controller
      */
     public function update(Request $request, $id)
     {
+//        dd($request->all());
         //verifica se o CNPJ informado já está em uso por outro registro.
         //se não estive sendo usado procegue com a atualização.
         $cnpjUnico = $this->Escola->cnpjUnico($request->cnpj);

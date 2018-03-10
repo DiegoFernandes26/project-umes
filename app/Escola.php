@@ -66,8 +66,8 @@ class Escola extends Model
         $f = ($dados->input('fundamental') != null ? 1 : $f = 0);
         $m = ($dados->input('medio') != null ? 1 : $m = 0);
         $s = ($dados->input('superior') != null ? 1 : $s = 0);
-        $pe = ($dados->input('pre_enem') != null ? 1 : $s = 0);
-        $o = ($dados->input('outros') != null ? 1 : $p = 0);
+        $pe = ($dados->input('pre_enem') != null ? 1 : $pe = 0); //erro aqui
+        $o = ($dados->input('outros') != null ? 1 : $o = 0);
         $dados = [
             'nome' => $dados->input('nome'),
             'cnpj' => $dados->input('cnpj'),
