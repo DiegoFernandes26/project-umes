@@ -53,7 +53,7 @@
         </div>
 
 
-        <div class="anoVigente">{{date('Y', strTotime($busca->created_at))}}</div>
+        <div class="anoVigente">{{date('Y', strTotime($busca->dt_validade)) - 1}}</div>
         <!--código de barras-->
         {{--<div class="qrCode"><img src="../../../img/img/barcode.jpg"></div>--}}
         <div class="qrCode">
