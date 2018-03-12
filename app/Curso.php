@@ -37,7 +37,7 @@ class Curso extends Model
     public function createCurso($request)
     {
         //tira espaços antes e depois, converte em minusculas e primeira maiúscula.
-        $name = trim(ucwords(mb_strtolower($request->input('name'))));
+        $name = $request->input('name');
         $curso = ['name'=>$name,'nivel'=>$request->input('nivel')];
 
         return $curso;

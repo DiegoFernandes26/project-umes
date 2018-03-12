@@ -14,6 +14,7 @@
     tr:nth-child(even) {
         background-color: #dddddd;
     }
+
 </style>
 <table>
     <tr>
@@ -25,15 +26,22 @@
         <th>Instituição</th>
         <th>Cadastrada em</th>
         <th>Cadastrada por</th>
-        <th>Nivel</th>
+        <th>Nível(s)</th>
     </tr>
+    
     @if($relatorio)
         @foreach ($relatorio as $dados)
             <tr>
                 <td>{{$dados->nome}}</td>
-                <td>{{date('d/m/Y', strtotime($dados->created_at))}}</td>                
-                <td>{{$dados->user->name}}</td>               
-                <td>{{($dados->fundamental == 1?'F':'M')}}</td>
+                <td>{{date('d/m/Y', strtotime($dados->created_at))}}</td>
+                <td>{{$dados->user->name}}</td>
+                <td>
+                    {{($dados->fundamental == 1?'F|':'')}}
+                    {{($dados->medio == 1?'M|':'')}}
+                    {{($dados->superior == 1?'S|':'')}}
+                    {{($dados->pre_nem == 1?'PE|':'')}}
+                    {{($dados->outros == 1?'O':'')}}
+                </td>
             </tr>
         @endforeach
     @endif

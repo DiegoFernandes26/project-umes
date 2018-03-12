@@ -45,9 +45,12 @@ class AdminCursosController extends Controller
     {
         $this->validate($request, $this->Curso->rules);
         if($this->Curso->create($this->Curso->createCurso($request))):
-            return back()->with(compact('curso'))->with('status',"Curso cadastrado com sucesso!");
+            return back()
+                ->with(compact('curso'))
+                ->with('status',"Curso cadastrado com sucesso!");
         else:
-            return back()->with('status','Erro ao criar curso, tente mais tarde!');
+            return back()
+                ->withErrors('Erro ao criar curso, tente mais tarde!');
         endif;
     }
 
@@ -63,7 +66,8 @@ class AdminCursosController extends Controller
         if(count($curso)>0):
             return view('admin.curso.edit', compact('curso'));
         else:
-            return back()->with('status','Curso não encontrado!:/');
+            return back()
+                ->withErrors('Curso não encontrado!:/');
         endif;
     }
 
@@ -80,16 +84,20 @@ class AdminCursosController extends Controller
         $this->validate($request, ['name' => 'required|max:100', 'nivel' => 'required'],
         ['name.required' => 'É necessário informar um nome para o curso!' ]);
 
-        $ifexisteCursoNome = Curso::where('name', $request->name)->where('id','!=', $id)->count();
+        $ifexisteCursoNome = Curso::where('name', $request->name)
+            ->where('id','!=', $id)
+            ->count();
         if($ifexisteCursoNome > 0):
-            return back()->with('status', 'O nome informado já está em uso, escolha outro!');
+            return back()
+                ->withErrors('O nome informado já está em uso, escolha outro!');
         else:
-            $name = trim(mb_strtolower($request->name));
-            $curso = Curso::find($id)->update(['name'=>$name, 'nivel'=>$request->nivel]);
+            $curso = Curso::find($id)->update(['name'=>$request->name, 'nivel'=>$request->nivel]);
             if($curso):
-                return back()->with('status','Curso '. $request->name.' atualizado com sucesso!');
+                return back()
+                    ->with('status','Curso '. $request->name.' atualizado com sucesso!');
             else:
-                return back()->with('status','Erro ao editar curso, tente mais tarde!');
+                return back()
+                    ->withErrors('Erro ao editar curso, tente mais tarde!');
             endif;
         endif;
     }
@@ -105,13 +113,16 @@ class AdminCursosController extends Controller
        $curso = $this->Curso->find($id);
        if(count($curso)>0):
             if($curso->checkRelCursos($id) != null):
-                return back()->with('status', 'Este curso não pode ser deletado pois possui relacionamentos!');
+                return back()
+                    ->withErrors('Este curso não pode ser deletado pois possui relacionamentos!');
             else:
                 $delete = $curso->delete();
                 if($delete):
-                    return back()->with('status', 'Curso deletado com sucesso!');
+                    return back()
+                        ->with('status', 'Curso deletado com sucesso!');
                 else:
-                    return back()->with('status', 'Erro inesperado ao deletar curso, tende mais tarde!');
+                    return back()
+                        ->withErrors('Erro inesperado ao deletar curso, tende mais tarde!');
                 endif;
             endif;
         else:
