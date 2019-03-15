@@ -1,11 +1,16 @@
 @extends('layout')
 @section('content')
     @include('admin.menu')
+
+    {{--Carteira - Versão2--}}
+
     <link rel="stylesheet" type="text/css" href="{{asset('css/carteira.css')}}">
     </head>
     <body>
 
     <div class="box_cartao">
+
+        <p>Versão 2</p>
 
         {{--A foto do modelo de carteira--}}
         @if($modelo)
@@ -92,5 +97,5 @@
 
     </div>
 
-
+{{--Carteira-versão 2--}}
 @stop

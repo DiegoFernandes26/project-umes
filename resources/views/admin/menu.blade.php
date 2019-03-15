@@ -15,7 +15,7 @@
         <ul class="left-align">
             <li class="brand-logo">
                 <div class="center-align">
-                    <h5><img class="logo-lc pulse" src="{{asset('img/logo.png')}}"></h5>
+                    <h5><img class="logo-lc pulse" src="{{asset('img/logoUmes.png')}}"></h5>
                 </div>
 
             </li>
@@ -78,8 +78,9 @@ $grav_url = "https://www.gravatar.com/avatar/" . md5(strtolower(trim($email))) .
     </li>
     <li><a href="{{route('cart.all')}}"><i class="material-icons">credit_card</i>Carteira</a></li>
     @if(Auth()->user()->nivel <= 1)
-    <li><a href="{{route('cart.verso')}}"><i class="material-icons">filter</i>Campanha</a></li>
-    {{--<li><a href="{{route('solicitacoes.index')}}"><i class="material-icons">filter</i>Solicitações</a></li>--}}
+        <li><a href="{{route('cart.verso')}}"><i class="material-icons">filter</i>Campanha</a></li>
+        <li><a href="{{route('cart.models')}}"><i class="material-icons">filter</i>Modelos</a></li>
+        {{--<li><a href="{{route('solicitacoes.index')}}"><i class="material-icons">filter</i>Solicitações</a></li>--}}
     @endif
     <li>
         <div class="divider"></div>

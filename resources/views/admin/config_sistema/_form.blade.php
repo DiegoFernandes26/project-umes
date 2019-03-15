@@ -35,14 +35,7 @@
         </div>
     </div>
     <div class="col s12">
-        <div class="file-field input-field">
-            <div class="btn grey lighten-1 grey-text text-darken-3">
-                <span><i class="material-icons left">crop_original</i>Carteira frente</span>
-                {!! Form::file('img_carteira', null, ['name'=>'img_carteira']) !!}
-            </div>
-            <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
-            </div>
-        </div>
+
+        <a href="{{route('cart.models')}}">Modelos de Carteiras</a>
     </div>
 </div>

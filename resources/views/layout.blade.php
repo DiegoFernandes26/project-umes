@@ -6,9 +6,9 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DCE</title>
-
-    <link rel="shortcut icon" href="{{{ asset('img/favicon.png') }}}">
+    <title>Identidade do estudante</title>
+    <meta name="robots" content="noindex">
+    <link rel="shortcut icon" href="{{{ asset('img/favicon_umes.png') }}}">
 
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">

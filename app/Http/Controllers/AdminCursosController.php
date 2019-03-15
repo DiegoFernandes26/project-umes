@@ -20,7 +20,7 @@ class AdminCursosController extends Controller
     }
     public function index()
     {
-        $cursos = $this->Curso->orderBy('name','asc')->get();
+        $cursos = $this->Curso->orderBy('name','asc')->paginate(10);
         $relation = $this->Curso;
         return view('admin.curso.index', compact('cursos', 'relation'));
     }

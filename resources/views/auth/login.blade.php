@@ -37,7 +37,7 @@
                     <button type="submit" class="waves-effect waves-light btn total cyan"
                             style="margin-right: 15px;">{{ trans('validation.attributes.login') }}</button>
                     <br/><br/>
-                    <a href="/forgot">{{ trans('validation.attributes.forgotpassword') }}</a>
+                    {{--<a href="/forgot">{{ trans('validation.attributes.forgotpassword') }}</a>--}}
                 </div>
 
             </form>

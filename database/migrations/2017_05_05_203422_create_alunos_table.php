@@ -20,9 +20,9 @@ class CreateAlunosTable extends Migration
             $table->string('rg')->nullable();
             $table->string('cpf',14)->unique();
             $table->string('org_expedidor')->nullable();
-            $table->string('celular')->unique()->nullable();
+            $table->string('celular')->nullable();
             $table->string('tel_fixo')->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->nullable();
             $table->date('dt_nascimento')->nullable();
             $table->string('mae')->nullable();
             $table->string('numero_carteira')->nullable();

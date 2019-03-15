@@ -73,6 +73,9 @@
                 });
             </script>
 
-        </div>
+            <div>
+                <p class="grey-text">*Só podem ser excluídos usuários que ainda não realizaram nenhum cadastro.</p>
+            </div></div>
+
     </div>
 @endsection

@@ -10,6 +10,7 @@ class Endereco extends Model
     protected $fillable = [
         'cep',
         'endereco',
+        'numero',
         'bairro',
         'cidade',
         'estado',
@@ -20,12 +21,12 @@ class Endereco extends Model
         'cep' => 'required',
         'endereco' => 'required',
         'cidade' => 'required|string',
-        'estado' => 'required',
+        'estado' => 'required|string',
         'complemento' => 'string'
     ];
 
     public function aluno(){
-        return $this->belongsTo('App\Aluno');
+        return $this->hasOne('App\Aluno');
     }
 
     public function escola(){

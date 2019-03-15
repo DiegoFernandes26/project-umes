@@ -19,7 +19,8 @@ class CreateConfiguracoesTable extends Migration
             $table->float('valor')->nulleble();
             $table->string('dt_expiracao',5);
             $table->string('logo_sistema');
-            $table->string('img_carteira');
+            /*$table->string('img_carteira');Esse campo foi retirado por que pediram para que a carteira passasse a ter vários modelos cadastrados, portanto foi preciso criar
+            uma tabela apenas para os modelos.*/
             $table->integer('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

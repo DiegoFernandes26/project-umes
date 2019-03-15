@@ -21,7 +21,6 @@ class Configuracoes extends Model
         'descricao',
         'valor',
         'logo_sistema',
-        'img_carteira',
         'dt_expiracao'
     ];
 
@@ -30,12 +29,11 @@ class Configuracoes extends Model
         'descricao' => 'max:500|string',
         'valor' => 'required',
         'dt_expiracao' => 'required',
-        'logo_sistema' => 'mimes:img,png,jpeg',
-        'img_carteira' => 'mimes:img,png,jpeg'
+        'logo_sistema' => 'mimes:img,png,jpeg'
     ];
 
     /*
-     * Só vai existir uma configuração no sistem.
+     * Só vai existir uma configuração no sistema.
      * portanto, se não existir configuração, cria-se, e se existir apenas atualiza.
      * @param $update = null, traz o resultado da busca em caso de atualização.
      */
@@ -71,9 +69,6 @@ class Configuracoes extends Model
             if ($request->logo_sistema):
                 $dados->logo_sistema = Imagens::saveImage($request->logo_sistema, $dados->id, $dir, 600);
             endif;
-            if ($request->img_carteira):
-                $dados->img_carteira = Imagens::saveImage($request->img_carteira, $dados->id, $dir, 600);
-            endif;
         endif;
         $dados->save();
 
@@ -81,6 +76,7 @@ class Configuracoes extends Model
     }
 
 
+//  Caso exista uma imagem de logo ou de "frente" da carteira no BD, esta será subtituida pela que o usuário está tentando atualizar.
     public function criaNoBancoEdeletnaPasta($request, $dados, $dir)
     {
         if($request->logo_sistema):
@@ -93,13 +89,6 @@ class Configuracoes extends Model
             endif;
         endif;
 
-        if($request->img_carteira):
-            $apagar = $dados->img_carteira;
-            $sucesso = $dados->update(['img_carteira'=>Imagens::saveImage($request->img_carteira, $dados->id, $dir, 600)]);
-            if($sucesso):
-                File::delete($apagar);
-            endif;
-        endif;
     }
 }
 

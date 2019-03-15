@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Aluno;
+use Dompdf\Exception;
 use Illuminate\Http\Request;
 use App\Endereco;
 
@@ -15,6 +17,62 @@ class AdminEnderecoController extends Controller
     public function __construct(Endereco $endereco)
     {
         $this->Endereco = $endereco;
+    }
+
+    public function createForAluno($id)
+    {
+        $aluno = Aluno::find($id);
+
+        if ($aluno->endereco != null) {
+            return redirect()
+                ->route('edit.endereco.aluno', $aluno->id);
+        } else {
+            return view('admin.endereco.create_for_aluno', compact('aluno'));
+        }
+    }
+
+    public function storeForAluno(Request $request)
+    {
+        $this->validate($request, $this->Endereco->rules);
+        $id = $this->Endereco->createEndereco($request);
+        $aluno = Aluno::find($request->aluno_id);
+
+        if ($id) {
+            $aluno->update(['endereco_id' => $id]);
+            return redirect()
+                ->route('cart.all')
+                ->with('status', 'Endereço cadastrado com sucesso para ' . $aluno->name . '.');
+        } else {
+            return back()
+                ->withErrors('Erro inesperado ao vincular endereço, tente novamente!');
+        }
+
+
+    }
+
+    public function editForAluno($id)
+    {
+        $aluno = Aluno::find($id);
+        if ($aluno->endereco != null) {
+            return view('admin.endereco.edit_for_aluno', compact('aluno'));
+        } else {
+            return redirect()
+                ->route('create.endereco.aluno', $aluno->id);
+        }
+    }
+
+    public function atualizarForAluno(Request $request, $id)
+    {
+        $this->validate($request, $this->Endereco->rules);
+        $atulizado = $this->Endereco->updateEndereco($request, $id);
+
+        if ($atulizado) {
+            return back()
+                ->with('status', 'Endereço atualizado com sucesso');
+        } else {
+            return back()
+                ->withErrors('Erro inesperado ao editar endereço, tente novamente!');
+        }
     }
 
     /**
@@ -43,7 +101,7 @@ class AdminEnderecoController extends Controller
         $escolaUpade = \App\Escola::find($request->escola_id);
         $escolaUpade->update(['endereco_id' => $enderecoId]);
 
-        return redirect()->action('AdminEscolaController@edit',[$request->escola_id])->with('status', 'Instituição e endereço criados com sucesso, agora vincule cursos a esta institução!');
+        return redirect()->action('AdminEscolaController@edit', [$request->escola_id])->with('status', 'Instituição e endereço criados com sucesso, agora vincule cursos a esta institução!');
     }
 
 
@@ -56,15 +114,15 @@ class AdminEnderecoController extends Controller
     public function edit($idEscola)
     {
         $instituicao = \App\Escola::find($idEscola);
-        if(count($instituicao)>0):
+        if (count($instituicao) > 0):
             $endereco = Endereco::find($instituicao->endereco_id);
-            if(count($endereco)>0):
+            if (count($endereco) > 0):
                 return view('admin.endereco.edit', compact('instituicao', 'endereco'));
             else:
                 return redirect()
-                    ->route('endereco.add',$idEscola);
+                    ->route('endereco.add', $idEscola);
             endif;
-        else:           
+        else:
             return redirect()
                 ->route('escola.list')
                 ->with('satatus', 'Instituição não encontrada :(');
@@ -74,13 +132,13 @@ class AdminEnderecoController extends Controller
     public function editAluno($id)
     {
         $aluno = \App\Aluno::find($id);
-        if(count($aluno)>0):
+        if (count($aluno) > 0):
             $endereco = Endereco::find($aluno->endereco_id);
-            if(count($endereco)>0):
+            if (count($endereco) > 0):
                 return view('admin.endereco.edit', compact('instituicao', 'endereco'));
             else:
                 return back()
-                    ->with('status','Endereço não encontrado :(');
+                    ->with('status', 'Endereço não encontrado :(');
             endif;
         else:
             return redirect()

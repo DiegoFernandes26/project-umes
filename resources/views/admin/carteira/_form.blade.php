@@ -23,30 +23,30 @@
         </div>
 
         <div class="col s4">
-            {!! Form::label('dt_nascimento','Data de Nascimento:') !!}
+            {!! Form::label('dt_nascimento','*Data de Nascimento:') !!}
             {!! Form::date('dt_nascimento', null, ['placeholder'=>'Data de nascimento']) !!}
         </div>
 
         <div class="col s3">
-            {!! Form::label('rg','RG:') !!}
+            {!! Form::label('rg','*RG:') !!}
             {!! Form::text('rg', null, ['placeholder'=>'RG']) !!}
         </div>
         <div class="col s3">
-            {!! Form::label('org_expedidor','Orgão Expedidor:') !!}
+            {!! Form::label('org_expedidor','*Orgão Expedidor:') !!}
             {!! Form::text('org_expedidor', null, ['placeholder'=>'Orgão Expedidor do RG','name'=>'org_expedidor']) !!}
         </div>
         <div class="col s3">
-            {!! Form::label('matricula','Matricula:') !!}
+            {!! Form::label('matricula','*Matricula:') !!}
             {!! Form::text('matricula', null, ['placeholder'=>'Matricula','name'=>'matricula']) !!}
         </div>
 
         <div class="col s3">
-            {!! Form::label('cpf','Cpf:') !!}
+            {!! Form::label('cpf','*Cpf:') !!}
             {!! Form::text('cpf', null, ['placeholder'=>'Número do CPF','class'=>'cpf-valida']) !!}
         </div>
 
         <div class="col s3">
-            {!! Form::label('sexo','Sexo:') !!}
+            {!! Form::label('sexo','*Sexo:') !!}
             {!! Form::select('sexo', ['m'=>'masculino','f'=>'feminino'] , null, ['placeholder'=>'Sexo','name'=>'sexo'] )!!}
         </div>
 
@@ -64,12 +64,12 @@
         </div>
 
         <div class="col s4">
-            {!! Form::label('mae','Mãe:') !!}
+            {!! Form::label('mae','*Mãe:') !!}
             {!! Form::text('mae', null, ['placeholder'=>'Nome da Mãe', 'name'=>'mae']) !!}
         </div>
 
         <div class="col s4">
-            {!! Form::label('curso_id','Curso:') !!}
+            {!! Form::label('curso_id','*Curso:') !!}
             {!! Form::select('curso_id', $curso , null, ['placeholder'=>'Selecionar Curso', 'name'=>'curso_id'] )!!}
         </div>
 
@@ -139,9 +139,10 @@
                 </div>
             </div>
             {{--preview da foto principal--}}
-
-
         </div>
+
+
+
 
 
         {{--foto da pessoa--}}
@@ -149,15 +150,26 @@
             {{--        {!! Form::label('foto','Foto:') !!}--}}
             <div class="file-field input-field">
                 <div class="btn grey lighten-2 grey-text text-darken-4">
-                    <span>Foto do aluno</span>
+                    <span>*Foto do aluno</span>
                     {!! Form::file('foto',['class'=>'form-control', 'id'=>'foto']) !!}
                 </div>
                 <div class="file-path-wrapper">
                     <input class="file-path validate" type="text" placeholder="Foto">
                 </div>
             </div>
+
+            {{--Se existir a variavel aluno e se tiver algum aruqivo ele disponibiliza o download--}}
+            @if(isset($aluno) && file_exists($aluno->foto))
+                <div>
+                    {{--<a href="{{asset($aluno->foto   )}}">Baixar</a>--}}
+{{--                    {!! Html::link($aluno->foto,'Baixar foto') !!}--}}
+                    <a href="{{route('cart.files', ['id'=>$aluno->id, 'file'=>1])}}" class="testo-list">Baixar Arquivo - 1</a>
+                </div>
+            @endif
         </div>
         {{--foto da pessoa--}}
+
+
 
         {{--foto da rg frente--}}
         <div class="col s3">
@@ -171,7 +183,15 @@
                     <input class="file-path validate" type="text" placeholder="RG Frente">
                 </div>
             </div>
+
+            {{--Se existir a variavel aluno e se tiver algum aruqivo ele disponibiliza o download--}}
+            @if(isset($aluno) && file_exists($aluno->rg_frente))
+                <div>
+                    <a href="{{route('cart.files', ['id'=>$aluno->id, 'file'=>2])}}" class="testo-list">Baixar Arquivo - 2</a>
+                </div>
+            @endif
         </div>
+
         {{--foto da rg frente--}}
 
         {{--foto da rg verso--}}
@@ -186,6 +206,13 @@
                     <input class="file-path validate" type="text" placeholder="RG Verso">
                 </div>
             </div>
+
+            {{--Se existir a variavel aluno e se tiver algum aruqivo ele disponibiliza o download--}}
+            @if(isset($aluno) && file_exists($aluno->rg_verso))
+                <div>
+                    <a href="{{route('cart.files', ['file'=>$aluno->rg_verso])}}" class="testo-list">Baixar Arquivo - 3</a>
+                </div>
+            @endif
         </div>
         {{--foto da rg verso--}}
         {{--foto da rg verso--}}
@@ -200,9 +227,36 @@
                     <input class="file-path validate" type="text" placeholder="Comprovante">
                 </div>
             </div>
+
+            {{--Se existir a variavel aluno e se tiver algum aruqivo ele disponibiliza o download--}}
+            @if(isset($aluno) && file_exists($aluno->comp_matricula))
+                <div>
+                    <a href="{{asset($aluno->comp_matricula)}}">Baixar</a>
+                    {{--{!! Html::link('download/filename.ext','filename') !!}--}}
+                    {{--<a target="_blank" href="{{route('cart.files', ['file'=>$aluno->comp_matricula])}}" class="testo-list">Baixar Arquivo - 4</a>--}}
+                </div>
+            @endif
         </div>
         {{--foto da rg verso--}}
+
+
     </fieldset>
 </div>
-@include('admin.endereco._form')
+
+
+
+{{--@include('admin.endereco._form')--}}
+@if(isset($aluno))
+    <div class="row">
+        <button class="btn red">
+
+            @if($aluno->endereco_id != 0)
+                <a href="{{route('edit.endereco.aluno',$aluno->id)}}">Editar endereço</a>
+            @else
+                <a href="{{route('create.endereco.aluno',$aluno->id)}}">Informar endereço</a>
+            @endif
+
+        </button>
+    </div>
+@endif
 {!! Form::hidden('escola_id', (isset($id) ? $id : $aluno->escola->id)) !!}

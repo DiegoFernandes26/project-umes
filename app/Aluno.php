@@ -24,25 +24,25 @@ class Aluno extends Model
     }
 
     protected $fillable = [
-        'name','name_social','sexo','rg','cpf','org_expedidor',
-        'dt_nascimento','celular','tel_fixo','email','mae','matricula',
-        'endereco_id','curso_id','matricula','periodo','pago','valor',
-        'dt_validade','foto','rg_frente','re_verso','comp_matricula',
-        'user_id','status','view_by','status'
+        'name', 'name_social', 'sexo', 'rg', 'cpf', 'org_expedidor',
+        'dt_nascimento', 'celular', 'tel_fixo', 'email', 'mae', 'matricula',
+        'endereco_id', 'curso_id', 'matricula', 'periodo', 'pago', 'valor',
+        'dt_validade', 'foto', 'rg_frente', 're_verso', 'comp_matricula',
+        'user_id', 'status', 'view_by', 'status'
     ];
 
     public $rules = [
         'name' => 'required|string',
         'dt_nascimento' => 'date|required',
-        'rg' => 'required|unique:alunos',
+        'rg' => 'required|integer|unique:alunos',
         'org_expedidor' => 'required',
-        'mae' => 'required',
+        'mae' => 'string',
         'sexo' => 'required',
         'celular' => 'unique:alunos|celular_com_ddd',
         'email' => 'email|unique:alunos',
         'matricula' => 'required',
         'cpf' => 'cpf|required|unique:alunos',
-        'foto' => 'required|mimes:jpg,jpeg,png',
+        'foto' => 'mimes:jpg,jpeg,png',
         'rg_frente' => 'mimes:jpg,jpeg,png',
         'rg_verso' => 'mimes:jpg,jpeg,png',
         'comp_matricula' => 'mimes:jpg,jpeg,png',
@@ -53,10 +53,10 @@ class Aluno extends Model
         'dt_nascimento' => 'date|required',
         'rg' => 'required|integer',
         'org_expedidor' => 'required',
-        'mae' => 'required|string',
+        'mae' => 'string',
         'sexo' => 'required',
-        'celular' => 'required|celular_com_ddd',
-        'email' => 'required|email',
+        'celular' => 'celular_com_ddd',
+        'email' => 'email',
         'matricula' => 'required',
         'cpf' => 'cpf|required',
         'foto' => 'mimes:jpg,jpeg,png',
@@ -73,7 +73,7 @@ class Aluno extends Model
 
     public function endereco()
     {
-        return $this->hasOne('App\Endereco');
+        return $this->belongsTo('App\Endereco');
     }
 
     public function curso()
@@ -153,21 +153,21 @@ class Aluno extends Model
             $saveCart->name_social = trim($dados->input('name_social'));
             $saveCart->sexo = ($dados->input('sexo') ? $dados->input('sexo') : 'm');
             $saveCart->dt_nascimento = $dados->input('dt_nascimento');
-            $saveCart->mae = mb_strtolower(trim($dados->input('mae') ? $dados->input('mae') : null));
-            $saveCart->rg = $dados->input('rg');
-            $saveCart->cpf = $dados->input('cpf');
+            $saveCart->mae = trim($dados->input('mae') ? $dados->input('mae') : null);
+            $saveCart->rg = trim($dados->input('rg'));
+            $saveCart->cpf = trim($dados->input('cpf'));
             $saveCart->dt_validade = $configuracoes->dt_expiracao;
-            $saveCart->org_expedidor = mb_strtolower(trim($dados->input('org_expedidor') ? $dados->input('org_expedidor') : null));
-            $saveCart->celular = ($dados->input('celular') ? $dados->input('celular') : null);
-            $saveCart->tel_fixo = ($dados->input('tel_fixo') ? $dados->input('tel_fixo') : null);
-            $saveCart->email = mb_strtolower(trim($dados->input('email') ? $dados->input('email') : null));
-            $saveCart->matricula = ($dados->input('matricula') ? $dados->input('matricula') : null);
-            $saveCart->periodo = ($dados->input('periodo') ? $dados->input('periodo') : null);
+            $saveCart->org_expedidor = trim($dados->input('org_expedidor') ? $dados->input('org_expedidor') : null);
+            $saveCart->celular = trim($dados->input('celular') ? $dados->input('celular') : null);
+            $saveCart->tel_fixo = trim($dados->input('tel_fixo') ? $dados->input('tel_fixo') : null);
+            $saveCart->email = mb_strtolower(trim($dados->input('email')));
+            $saveCart->matricula = trim($dados->input('matricula') ? $dados->input('matricula') : null);
+            $saveCart->periodo = trim($dados->input('periodo') ? $dados->input('periodo') : null);
             $saveCart->pago = ($dados->input('pago') ? $dados->input('pago') : "nao");
             $saveCart->valor = ($dados->input('pago') ? $configuracoes->valor : 0);
 
-            $endereco = $this->Endereco->createEndereco($dados);
-            $saveCart->endereco_id = ($endereco ? $endereco : null);
+//            $endereco = $this->Endereco->createEndereco($dados);
+//            $saveCart->endereco_id = ($endereco ? $endereco : null);
 
             $saveCart->escola_id = $dados->input('escola_id');
             $saveCart->curso_id = $dados->input('curso_id');
@@ -178,16 +178,16 @@ class Aluno extends Model
             $id = $saveCart->id;
             //gera o código da carteira apos a criação desta
             $this->gerarCodigoUnico($saveCart->id);
-            $saveCart->foto = Imagens::saveImage($dados->foto, $id, $diretorio,300);
+            $saveCart->foto = Imagens::saveImage($dados->foto, $id, $diretorio, 300);
 
             if (!empty($dados->rg_frente)):
-                $saveCart->rg_frente = Imagens::saveImage($dados->rg_frente, $id, $diretorio,600);
+                $saveCart->rg_frente = Imagens::saveImage($dados->rg_frente, $id, $diretorio, 600);
             endif;
             if (!empty($dados->rg_verso)):
-                $saveCart->rg_verso = Imagens::saveImage($dados->rg_verso, $id, $diretorio,600);
+                $saveCart->rg_verso = Imagens::saveImage($dados->rg_verso, $id, $diretorio, 600);
             endif;
             if (!empty($dados->comp_matricula)):
-                $saveCart->comp_matricula = Imagens::saveImage($dados->comp_matricula, $id, $diretorio,600);
+                $saveCart->comp_matricula = Imagens::saveImage($dados->comp_matricula, $id, $diretorio, 600);
             endif;
             $saveCart->save();
 
@@ -210,36 +210,38 @@ class Aluno extends Model
             'sexo' => $dados->input('sexo'),
             'rg' => trim($dados->input('rg')),
             'cpf' => trim($dados->input('cpf')),
-            'org_expedidor' => mb_strtolower(trim(($dados->input('org_expedidor') ? $dados->input('org_expedidor') : null))),
+            'org_expedidor' => trim(($dados->input('org_expedidor') ? $dados->input('org_expedidor') : null)),
             'celular' => trim(($dados->input('celular') ? $dados->input('celular') : null)),
             'tel_fixo' => trim(($dados->input('tel_fixo') ? $dados->input('tel_fixo') : null)),
-            'email' => trim(($dados->input('email') ? $dados->input('email') : null)),
+            'email' => mb_strtolower(trim($dados->input('email'))),
             'dt_nascimento' => $dados->input('dt_nascimento'),
-            'mae' => mb_strtolower(trim(($dados->input('mae') ? $dados->input('mae') : null))),
+            'mae' => trim(($dados->input('mae') ? $dados->input('mae') : null)),
             'matricula' => trim(($dados->input('matricula') ? $dados->input('matricula') : null)),
-            'periodo' => mb_strtolower(trim(($dados->input('periodo') ? $dados->input('periodo') : null))),
+            'periodo' => trim(($dados->input('periodo') ? $dados->input('periodo') : null)),
             'pago' => ($dados->input('pago') ? $dados->input('pago') : 0),
             'valor' => ($dados->input('pago') ? $valor->valor : 0),
             'curso_id' => $dados->input('curso_id'),
+
+            //se não tiver sido o atual logado quem criou essa carteira ele permanecerá com o id de quem a criou.
             'user_id' => ($aluno->user_id != Auth()->user()->id ? $aluno->user_id : Auth()->user()->id),
         ];
         //apaga a foto da pasta e cria outra no banco.
         if (count($aluno) > 0):
             if (!empty($dados->file('foto'))):
                 File::delete($aluno->foto);
-                $aluno->update(['foto' => Imagens::saveImage($dados->foto, $id, $diretorio,300)]);
+                $aluno->update(['foto' => Imagens::saveImage($dados->foto, $id, $diretorio, 300)]);
             endif;
             if (!empty($dados->file('rg_frente'))):
                 File::delete($aluno->rg_frente);
-                $aluno->update(['rg_frente' => Imagens::saveImage($dados->rg_frente, $id, $diretorio,600)]);
+                $aluno->update(['rg_frente' => Imagens::saveImage($dados->rg_frente, $id, $diretorio, 600)]);
             endif;
             if (!empty($dados->file('rg_verso'))):
                 File::delete($aluno->rg_verso);
-                $aluno->update(['rg_verso' => Imagens::saveImage($dados->rg_verso, $id, $diretorio,600)]);
+                $aluno->update(['rg_verso' => Imagens::saveImage($dados->rg_verso, $id, $diretorio, 600)]);
             endif;
             if (!empty($dados->file('comp_matricula'))):
                 File::delete($aluno->comp_matricula);
-                $aluno->update(['comp_matricula' => Imagens::saveImage($dados->comp_matricula, $id, $diretorio,600)]);
+                $aluno->update(['comp_matricula' => Imagens::saveImage($dados->comp_matricula, $id, $diretorio, 600)]);
             endif;
         endif;
 
@@ -270,5 +272,40 @@ class Aluno extends Model
             dd('Erro: O código de carterina ' . $codigo . ' ja esta sendo usado!');
         endif;
         return $codigo;
+    }
+
+    /*
+     * Realiza uma busca de acordo com os parâmetros informados
+     */
+    public function filtrarAluno(array $data, $resultadosPorPagina = null)
+    {
+
+        $resultado = $this->where(function ($query) use ($data) {
+
+            if (isset($data['cpf']) && $data['cpf'] != null)
+                $query->where('cpf', $data['cpf']);
+
+            if (isset($data['instituicao']) && $data['instituicao'] != null)
+                $query->where('escola_id', $data['instituicao']);
+
+            if (isset($data['data_inicio']) && $data['data_inicio'] != "")
+                $query->where('created_at', '>=', date('Y-m-d H:i:s', strtotime($data['data_inicio'])));
+
+            if (isset($data['data_fim']) && $data['data_fim'] != "")
+                $query->where('created_at', '<=', date('Y-m-d H:i:s', strtotime($data['data_fim'])));
+
+            if (isset($data['status']) && $data['status'] != null) {
+                if ($data['status'] == 1)//vencidas
+                    $query->where('dt_validade', '<', date('Y-m-d'));
+                if ($data['status'] == 2)//não vencidas
+                    $query->where('dt_validade', '>', date('Y-m-d'));
+            }
+
+        })
+            ->orderBy('id', 'desc')
+            ->paginate($resultadosPorPagina);
+
+
+        return $resultado;
     }
 }

@@ -28,7 +28,7 @@
         <th>Cadastrada por</th>
         <th>Nível(s)</th>
     </tr>
-    
+
     @if($relatorio)
         @foreach ($relatorio as $dados)
             <tr>

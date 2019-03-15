@@ -111,6 +111,15 @@
                         </a>
                         {{--bloco--}}
 
+                        {{--bloco--}}
+                        <a href="{{route('alunos.instituicao')}}">
+                        <div class="col s2 box-relatorio">
+                            <p><i class="material-icons">history</i></p>
+                            <h6>Alunos por instituição</h6>
+                        </div>
+                        </a>
+                        {{--bloco--}}
+
 
                     </div>
 

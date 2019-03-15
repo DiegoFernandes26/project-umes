@@ -61,8 +61,13 @@
                 </div>
                 @endif
 
+                {!! $cursos->render() !!}
+
 
             </div>
+        <div>
+            <p class="grey-text">*Só podem ser excluídos cursos que ainda não tenha alunos vinculados.</p>
+        </div>
     </div>
 
 
