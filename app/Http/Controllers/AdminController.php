@@ -29,6 +29,11 @@ class AdminController extends Controller
 //        $user = \App\User::find(1);
 //        Auth::login($user);
 //    }
+//    public function auth(){
+//        $user = \App\User::find(1);
+//        Auth::login($user);
+//    }
+
 
     /**@return \Illuminate\Http\Response */
     public function index()
